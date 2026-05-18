@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuenta - Nuevo Ingreso ESCOM</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        :root { --ipn-guinda: #6B1C3A; --escom-azul: #005596; }
+        body { background-color: #f8f9fa; min-height: 100vh; display: flex; flex-direction: column; }
+        .navbar { background-color: var(--ipn-guinda); }
+        .navbar-brand img { height: 40px; margin-right: 10px; background-color: white; border-radius: 4px; padding: 2px; }
+        main { flex: 1; }
+        footer { background-color: var(--escom-azul); color: white; text-align: center; padding: 1rem 0; margin-top: auto; }
+    </style>
+</head>
+<body>
+
+    <!-- Menú de Navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="/imgs/IPN-Logo.png" alt="Logo IPN">
+                <img src="/imgs/escudo_ESCOM.png" alt="Logo ESCOM">
+                <img src="/imgs/escudo_ESCOM.png" alt="Logo Equipo">
+                <span class="ms-2 fs-5 fw-bold d-none d-sm-block">Nuevo Ingreso</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="registro.html">Registro</a></li>
+                    <li class="nav-item"><a class="nav-link" href="admin.html">Admin</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="cuenta.html">Cuenta</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card shadow mt-5">
+                    <div class="card-header text-center text-white" style="background-color: var(--escom-azul);">
+                        <h4 class="mb-0">Mi Cuenta Escolar</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <form>
+                            <div class="mb-3">
+                                <label class="form-label">Correo Institucional</label>
+                                <input type="email" class="form-control" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Contraseña</label>
+                                <input type="password" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn w-100 text-white" style="background-color: var(--escom-azul);">Entrar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p class="mb-0">Instituto Politécnico Nacional - ESCOM &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="[https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js](https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js)"></script>
+</body>
+</html>
