@@ -22,9 +22,9 @@
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
-                <img src="/imgs/IPN-Logo.png" alt="Logo IPN">
-                <img src="/imgs/escudo_ESCOM.png" alt="Logo ESCOM">
-                <img src="/imgs/escudo_ESCOM.png" alt="Logo Equipo">
+                <img src="imgs/IPN-Logo.png" alt="Logo IPN">
+                <img src="imgs/escudo_ESCOM.png" alt="Logo ESCOM">
+                <img src="imgs/escudo_ESCOM.png" alt="Logo Equipo">
                 <span class="ms-2 fs-5 fw-bold d-none d-sm-block">Nuevo Ingreso</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -44,7 +44,7 @@
     <main class="container my-5">
         <h2 class="text-center mb-4" style="color: var(--ipn-guinda);">Registro de Datos Generales</h2>
         
-        <form id="formularioRegistro">
+        <form id="formularioRegistro" novalidate>
             <!-- 1. Datos Personales -->
             <div class="card mb-4 shadow-sm">
                 <div class="card-header card-header-ipn">
@@ -53,15 +53,28 @@
                 <div class="card-body row g-3">
                     <div class="col-md-6">
                         <label class="form-label">Número de boleta</label>
-                        <input type="text" class="form-control" id="boleta" placeholder="Ej: 2022630000 o PE12345678" required>
+                        <input type="text" class="form-control" id="boleta" placeholder="Ej: 2022630000" required>
+                        <div id="errorBoleta" class="invalid-feedback">El numero de boleta es incorrecto. Debe ser '20**63****'</div>
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label">Nombre completo</label>
-                        <input type="text" class="form-control" id="nombre" placeholder="Nombre(s) y Apellidos" required>
+                        <label class="form-label">Nombre(s)</label>
+                        <input type="text" class="form-control" id="nombres" placeholder="Ej: Juan Carlos" required>
+                        <div id="errornombre" class="invalid-feedback">El o los Nombres son incorrectos</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Apellido paterno</label>
+                        <input type="text" class="form-control" id="apellidoP" placeholder="Ej: García" required>
+                        <div id="errorApellidoP" class="invalid-feedback">El Apellido Paterno es incorrecto</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Apellido materno</label>
+                        <input type="text" class="form-control" id="apellidoM" placeholder="Ej: López" required>
+                        <div id="errorApellidoM" class="invalid-feedback">El Apellido Materno es incorrecto</div>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Fecha de nacimiento</label>
                         <input type="date" class="form-control" id="fechaNacimiento" required>
+                        <div id="errorApellidoM" class="invalid-feedback">Necesitas tener minimo 17</div>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Género</label>
@@ -75,19 +88,50 @@
                     <div class="col-md-4">
                         <label class="form-label">CURP</label>
                         <input type="text" class="form-control" id="curp" placeholder="18 caracteres" maxlength="18" required>
+                        <div id="errorCurp" class="invalid-feedback">El CURP es incorrecto</div>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Entidad federativa de procedencia</label>
-                        <!-- FASE 2: Llenar dinámicamente o estáticamente con los 32 estados -->
                         <select class="form-select" id="entidad" required>
                             <option value="" selected disabled>Selecciona un estado...</option>
-                            <option value="CDMX">Ciudad de México</option>
+                            <option value="Aguascalientes">Aguascalientes</option>
+                            <option value="Baja California">Baja California</option>
+                            <option value="Baja California Sur">Baja California Sur</option>
+                            <option value="Campeche">Campeche</option>
+                            <option value="Chiapas">Chiapas</option>
+                            <option value="Chihuahua">Chihuahua</option>
+                            <option value="Ciudad de México">Ciudad de México</option>
+                            <option value="Coahuila">Coahuila</option>
+                            <option value="Colima">Colima</option>
+                            <option value="Durango">Durango</option>
                             <option value="Estado de México">Estado de México</option>
+                            <option value="Guanajuato">Guanajuato</option>
+                            <option value="Guerrero">Guerrero</option>
+                            <option value="Hidalgo">Hidalgo</option>
+                            <option value="Jalisco">Jalisco</option>
+                            <option value="Michoacán">Michoacán</option>
+                            <option value="Morelos">Morelos</option>
+                            <option value="Nayarit">Nayarit</option>
+                            <option value="Nuevo León">Nuevo León</option>
+                            <option value="Oaxaca">Oaxaca</option>
+                            <option value="Puebla">Puebla</option>
+                            <option value="Querétaro">Querétaro</option>
+                            <option value="Quintana Roo">Quintana Roo</option>
+                            <option value="San Luis Potosí">San Luis Potosí</option>
+                            <option value="Sinaloa">Sinaloa</option>
+                            <option value="Sonora">Sonora</option>
+                            <option value="Tabasco">Tabasco</option>
+                            <option value="Tamaulipas">Tamaulipas</option>
+                            <option value="Tlaxcala">Tlaxcala</option>
+                            <option value="Veracruz">Veracruz</option>
+                            <option value="Yucatán">Yucatán</option>
+                            <option value="Zacatecas">Zacatecas</option>
                         </select>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Teléfono</label>
                         <input type="tel" class="form-control" id="telefono" placeholder="Solo números" required>
+                        <div id="errorTel" class="invalid-feedback">Necesitan ser 10 numeros</div>
                     </div>
                 </div>
             </div>
@@ -98,18 +142,38 @@
                     <h5 class="mb-0">2. Datos de Procedencia</h5>
                 </div>
                 <div class="card-body row g-3">
-                    <div class="col-md-6">
+                    <div class="col-md-6">  
                         <label class="form-label">Escuela de procedencia</label>
                         <!-- FASE 2: Llenar con escuelas y programar onchange para "Otro" -->
                         <select class="form-select" id="escuelaProcedencia" required>
                             <option value="" selected disabled>Selecciona tu escuela...</option>
-                            <option value="CECYT 9">CECYT 9 "Juan de Dios Bátiz"</option>
+                            <option value="CECyT 1">CECyT 1 "Gonzalo Vázquez Vela"</option>
+                            <option value="CECyT 2">CECyT 2 "Miguel Bernard Perales"</option>
+                            <option value="CECyT 3">CECyT 3 "Estanislao Ramírez Ruíz"</option>
+                            <option value="CECyT 4">CECyT 4 "Lázaro Cárdenas"</option>
+                            <option value="CECyT 5">CECyT 5 "Benito Juárez García"</option>
+                            <option value="CECyT 6">CECyT 6 "Miguel Othón de Mendizabal"</option>
+                            <option value="CECyT 7">CECyT 7 "Cuauhtémoc"</option>
+                            <option value="CECyT 8">CECyT 8 "Narciso Bassols García"</option>
+                            <option value="CECyT 9">CECyT 9 "Juan de Dios Bátiz Paredes"</option>
+                            <option value="CECyT 10">CECyT 10 "Carlos Vallejo Márquez"</option>
+                            <option value="CECyT 11">CECyT 11 "Wilfrido Massieu"</option>
+                            <option value="CECyT 12">CECyT 12 "José María Morelos"</option>
+                            <option value="CECyT 13">CECyT 13 "Ricardo Flores Magón"</option>
+                            <option value="CECyT 14">CECyT 14 "Luis Enrique Erro Soler"</option>
+                            <option value="CECyT 15">CECyT 15 "Diódoro Antúnez Echegaray"</option>
+                            <option value="CECyT 16">CECyT 16 "Unidad Hidalgo"</option>
+                            <option value="CECyT 17">CECyT 17 "Unidad Guanajuato"</option>
+                            <option value="CECyT 18">CECyT 18 "Unidad Zacatecas"</option>
+                            <option value="CECyT 19">CECyT 19 "Leona Vicario Unidad Tecámac"</option>
+                            <option value="CET 1">CET 1 "Walter Cross Buchanan"</option>
                             <option value="Otro">Otro</option>
                         </select>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Nombre de la escuela (Si elegiste 'Otro')</label>
                         <input type="text" class="form-control" id="nombreOtraEscuela" placeholder="Especificar escuela">
+                        <div id="errorOtraEscuela" class="invalid-feedback">Debes especificar el nombre de la escuela</div>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Promedio</label>
@@ -127,11 +191,12 @@
                     <div class="col-md-6">
                         <label class="form-label">Correo electrónico institucional</label>
                         <input type="email" class="form-control" id="correo" placeholder="usuario@alumno.ipn.mx" required>
+                        <div id="errorCorreo" class="invalid-feedback">El correo debe terminar en @alumno.ipn.mx</div>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Contraseña</label>
                         <input type="password" class="form-control" id="password" required>
-                        <div class="form-text">Mínimo 6 caracteres, 1 mayúscula, 1 dígito y 1 carácter especial.</div>
+                        <div class="form-text">Mínimo 8 caracteres, 1 mayúscula, 1 dígito y 1 carácter especial.</div>
                     </div>
                 </div>
             </div>
@@ -154,11 +219,7 @@
             <small>Desarrollado para la materia Tecnologías para el Desarrollo de Aplicaciones Web</small>
         </div>
     </footer>
-
     <script src="[https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js](https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js)"></script>
-    <script>
-        // AQUÍ INICIA FASE 2 Y 3: 
-        // Lógica de selects, Regex en onsubmit, etc.
-    </script>
+    <script src="js/registro.js"></script>
 </body>
 </html>
