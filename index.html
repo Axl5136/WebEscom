@@ -3,19 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio - Nuevo Ingreso ESCOM</title>
+    <title>Escuela Superior de Cómputo - IPN</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <style>
-        :root { --ipn-guinda: #6B1C3A; --escom-azul: #005596; }
-        body { background-color: #f8f9fa; min-height: 100vh; display: flex; flex-direction: column; }
-        .navbar { background-color: var(--ipn-guinda); }
-        .navbar-brand img { height: 40px; margin-right: 10px; background-color: white; border-radius: 4px; padding: 2px; }
-        main { flex: 1; }
-        footer { background-color: var(--escom-azul); color: white; text-align: center; padding: 1rem 0; margin-top: auto; }
-        .carousel-item { height: 400px; background-color: #333; }
-        .carousel-item img { object-fit: cover; height: 100%; width: 100%; opacity: 0.6; }
-    </style>
+    <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
 
@@ -23,10 +14,8 @@
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
-                <img src="/imgs/IPN-Logo.png" alt="Logo IPN">
-                <img src="/imgs/escudo_ESCOM.png" alt="Logo ESCOM">
-                <img src="/imgs/escudo_ESCOM.png" alt="Logo Equipo">
-                <span class="ms-2 fs-5 fw-bold d-none d-sm-block">Nuevo greso</span>
+                <img src="imgs/logoESCOMBlanco.png" alt="Logo ESCOM">
+                <span class="ms-2 fs-5 fw-bold d-none d-sm-block">Escuela Superior de Computo</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -53,21 +42,27 @@
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="/imgs/escudo_ESCOM.png" alt="Bienvenida">
+                    <a href="https://www.escom.ipn.mx/nuevoingreso25_2/">
+                        <img class="carrusel" src="imgs/letrasESCOM.png" alt="Nuevo Ingreso">
+                    </a>
                     <div class="carousel-caption d-none d-md-block">
                         <h3>Inicio de ciclo escolar</h3>
                         <p>Consulta las fechas importantes para tu curso de inducción.</p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="/imgs/IPN-Logo.png" alt="Credencial">
+                    <a href="https://www.escom.ipn.mx/SSEIS/gestionescolar/servicios/tramite.php">
+                        <img src="imgs/credencial.png" alt="Credencial">
+                    </a>
                     <div class="carousel-caption d-none d-md-block">
                         <h3>Trámite de Credencial</h3>
                         <p>Revisa los requisitos para obtener tu credencial del IPN.</p>
                     </div>
                 </div>
-                <div class="carousel-item">
-                    <img src="[https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1000&q=80](https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1000&q=80)" alt="Clubes">
+                <div class="carousel-item active">
+                    <a href="https://www.escom.ipn.mx/htmls/escomunidad/clubs.php">
+                        <img src="imgs/clubes.png" alt="clubes">
+                    </a>
                     <div class="carousel-caption d-none d-md-block">
                         <h3>Actividades Deportivas y Culturales</h3>
                         <p>Conoce los clubes de algoritmos, robótica y deportes.</p>
@@ -86,10 +81,29 @@
     </main>
 
     <footer>
-        <div class="container">
-            <p class="mb-0">Instituto Politécnico Nacional - ESCOM &copy; 2026</p>
-            <small>Desarrollado para la materia Tecnologías para el Desarrollo de Aplicaciones Web</small>
+    <div class="container d-flex justify-content-between align-items-center py-3">
+        <img src="imgs/IPN-Logo.png" alt="Logo IPN" style="max-height: 65px;">
+        
+        <div class="contenedor-central-footer">
+            
+            <div class="bloque-texto">
+                <p class="mb-0">Instituto Politécnico Nacional - ESCOM &copy; 2026</p>
+                <small>Desarrollado para la materia Tecnologías para el Desarrollo de Aplicaciones Web</small>
+            </div>
+            
+            <div class="bloque-redes">
+                <small class="fw-bold titulo-redes-small">Siguenos en nuestras redes sociales</small>
+                <ul class="list-unstyled mb-0 lista-redes-footer">
+                    <li><a href="https://www.facebook.com/share/1BSBQNFr3F/" class="footer-link"><i class="bi bi-facebook me-2"></i>escomipnmx</a></li>
+                    <li><a href="https://www.instagram.com/escom_ipn_mx" class="footer-link"><i class="bi bi-instagram me-2"></i>escom_ipn_mx</a></li>
+                    <li><a href="https://www.tiktok.com/@escom_ipn_mx" class="footer-link"><i class="bi bi-tiktok me-2"></i>escom_ipn_mx</a></li>
+                    <li><a href="https://x.com/escomunidad/" class="footer-link"><i class="bi bi-twitter-x me-2"></i>@escomunidad</a></li>
+                </ul>
+            </div>
+
         </div>
+        <img src="imgs/logoESCOMBlanco.png" alt="Logo ESCOM" style="max-height: 65px;">
+    </div>
     </footer>
 
     <!-- Bootstrap 5 JS -->
