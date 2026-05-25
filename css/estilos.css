@@ -2,13 +2,13 @@
     box-sizing: border-box;
 }
 :root{
-    --ipn-guinda: #075ab8; --escom-azul: #075ab8;
+    --ipn-guinda: #6B1C3A; --escom-azul: #075ab8;
 }
 body {
     background-color: #f8f9fa; min-height: 100vh; display: flex; flex-direction: column; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 .navbar {
-    background-color: var(--ipn-guinda);
+    background-color: var(--escom-azul);
 }
 .navbar-brand img {
     height: 50px; margin-right: 2px; border-radius: 4px; padding: 2px;
@@ -104,12 +104,24 @@ footer {
     }
 }
 
-/* Cards de login (admin/cuenta) no se achaten en móvil */
-@media (max-width: 575px) {
+@media (max-width: 768px) {
     .card.shadow.mt-5 {
-        margin-top: 1.5rem !important;
+        margin-top: 2rem !important;
+        border-radius: 12px;
+        border: none;
     }
     .card-body.p-4 {
-        padding: 1.25rem !important;
+        padding: 1.5rem 1.2rem !important;
+    }
+    .card .form-control {
+        padding: 0.8rem;
+        font-size: 1rem;
+        border-radius: 8px;
+    }
+    .card .btn {
+        padding: 0.8rem;
+        font-size: 1.1rem;
+        border-radius: 8px;
+        font-weight: 600;
     }
 }
