@@ -6,15 +6,7 @@
     <title>Registro - Nuevo Ingreso ESCOM</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <style>
-        :root { --ipn-guinda: #6B1C3A; --escom-azul: #005596; }
-        body { background-color: #f8f9fa; min-height: 100vh; display: flex; flex-direction: column; }
-        .navbar { background-color: var(--ipn-guinda); }
-        .navbar-brand img { height: 40px; margin-right: 10px; background-color: white; border-radius: 4px; padding: 2px; }
-        main { flex: 1; }
-        footer { background-color: var(--escom-azul); color: white; text-align: center; padding: 1rem 0; margin-top: auto; }
-        .card-header-ipn { background-color: var(--ipn-guinda); color: white; }
-    </style>
+    <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
 
@@ -22,10 +14,8 @@
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
-                <img src="imgs/IPN-Logo.png" alt="Logo IPN">
-                <img src="imgs/escudo_ESCOM.png" alt="Logo ESCOM">
-                <img src="imgs/escudo_ESCOM.png" alt="Logo Equipo">
-                <span class="ms-2 fs-5 fw-bold d-none d-sm-block">Nuevo Ingreso</span>
+                <img src="imgs/logoESCOMBlanco.png" alt="Logo IPN">
+                <span class="ms-2 fs-5 fw-bold d-none d-sm-block">Registro</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -191,12 +181,12 @@
                     <div class="col-md-6">
                         <label class="form-label">Correo electrónico institucional</label>
                         <input type="email" class="form-control" id="correo" placeholder="usuario@alumno.ipn.mx" required>
-                        <div id="errorCorreo" class="invalid-feedback">El correo debe terminar en @alumno.ipn.mx</div>
+                        <div id="errorCorreo" class="invalid-feedback">El correo es incorrecto</div>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Contraseña</label>
                         <input type="password" class="form-control" id="password" required>
-                        <div class="form-text">Mínimo 8 caracteres, 1 mayúscula, 1 dígito y 1 carácter especial.</div>
+                        <div class="form-text">Mínimo 6 caracteres, 1 mayúscula, 1 dígito y 1 carácter especial.</div>
                     </div>
                 </div>
             </div>
@@ -213,13 +203,32 @@
         </div>
     </main>
 
-    <footer>
-        <div class="container">
-            <p class="mb-0">Instituto Politécnico Nacional - ESCOM &copy; 2026</p>
-            <small>Desarrollado para la materia Tecnologías para el Desarrollo de Aplicaciones Web</small>
+   <footer>
+    <div class="container d-flex justify-content-between align-items-center py-3">
+        <img src="imgs/IPN-Logo.png" alt="Logo IPN" style="max-height: 65px;">
+        
+        <div class="contenedor-central-footer">
+            
+            <div class="bloque-texto">
+                <p class="mb-0">Instituto Politécnico Nacional - ESCOM &copy; 2026</p>
+                <small>Desarrollado para la materia Tecnologías para el Desarrollo de Aplicaciones Web</small>
+            </div>
+            
+            <div class="bloque-redes">
+                <small class="fw-bold titulo-redes-small">Siguenos en nuestras redes sociales</small>
+                <ul class="list-unstyled mb-0 lista-redes-footer">
+                    <li><a href="https://www.facebook.com/share/1BSBQNFr3F/" class="footer-link"><i class="bi bi-facebook me-2"></i>escomipnmx</a></li>
+                    <li><a href="https://www.instagram.com/escom_ipn_mx" class="footer-link"><i class="bi bi-instagram me-2"></i>escom_ipn_mx</a></li>
+                    <li><a href="https://www.tiktok.com/@escom_ipn_mx" class="footer-link"><i class="bi bi-tiktok me-2"></i>escom_ipn_mx</a></li>
+                    <li><a href="https://x.com/escomunidad/" class="footer-link"><i class="bi bi-twitter-x me-2"></i>@escomunidad</a></li>
+                </ul>
+            </div>
+
         </div>
+        <img src="imgs/logoESCOMBlanco.png" alt="Logo ESCOM" style="max-height: 65px;">
+    </div>
     </footer>
-    <script src="[https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js](https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js)"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="js/registro.js"></script>
 </body>
 </html>
