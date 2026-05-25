@@ -1,0 +1,115 @@
+*{
+    box-sizing: border-box;
+}
+:root{
+    --ipn-guinda: #075ab8; --escom-azul: #075ab8;
+}
+body {
+    background-color: #f8f9fa; min-height: 100vh; display: flex; flex-direction: column; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.navbar {
+    background-color: var(--ipn-guinda);
+}
+.navbar-brand img {
+    height: 50px; margin-right: 2px; border-radius: 4px; padding: 2px;
+}
+main {
+    flex: 1; 
+}
+footer { 
+    background-color: var(--escom-azul); color: white; text-align: center; padding: 1rem 0; margin-top: auto; 
+}
+.carousel-item{ 
+    height: 400px; background-color: #333; border-width: 5px; 
+}
+.carousel-item img{
+    object-fit: cover; height: 100%; width: 100%; opacity: 0.6;
+}
+.contenedor-footer{
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; padding: 15px 0;
+}
+.imagen-footer{
+    max-height: 50px; width: auto;
+}
+.texto-central{
+    text-align: center;
+}
+@media (max-width: 699px){
+    .contenedor-footer {
+        flex-direction: column;
+    }
+}
+
+.contenedor-central-footer {
+    flex: 1;
+    max-width: 65%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+}
+
+.lista-redes-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.footer-link {
+    color: inherit;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+@media (min-width: 700px) {
+    .contenedor-central-footer {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 70%;
+    }
+    .bloque-texto {
+        text-align: left;
+    }
+    .bloque-redes {
+        text-align: center;
+    }
+    .lista-redes-footer {
+        align-items: center;
+        margin-top: 5px;
+    }
+}
+
+/* Carrusel: mostrar caption reducido en móvil */
+.carousel-caption {
+    display: block !important;
+}
+@media (max-width: 767px) {
+    .carousel-caption {
+        bottom: 8px;
+        padding: 6px 10px;
+        background: rgba(0,0,0,0.45);
+        border-radius: 6px;
+    }
+    .carousel-caption h3 {
+        font-size: 0.95rem;
+        margin-bottom: 2px;
+    }
+    .carousel-caption p {
+        font-size: 0.75rem;
+        margin-bottom: 0;
+    }
+}
+
+/* Cards de login (admin/cuenta) no se achaten en móvil */
+@media (max-width: 575px) {
+    .card.shadow.mt-5 {
+        margin-top: 1.5rem !important;
+    }
+    .card-body.p-4 {
+        padding: 1.25rem !important;
+    }
+}
