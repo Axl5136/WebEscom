@@ -3,154 +3,93 @@ document.getElementById("formularioRegistro").addEventListener("submit", functio
 
     let formValido = true;
 
+    function setValidacion(id, esValido) {
+        const el = document.getElementById(id);
+        if (esValido) {
+            el.classList.remove("is-invalid");
+            el.classList.add("is-valid");
+        } else {
+            el.classList.add("is-invalid");
+            el.classList.remove("is-valid");
+        }
+        return esValido;
+    }
+
     const boleta = document.getElementById("boleta").value.trim();
-    const regexBoleta = /^(20\d{2}63\d{4}|P[EP]\d{8})$/;
     const anio = parseInt(boleta.substring(0, 4), 10);
     const anioActual = new Date().getFullYear();
-    if (!regexBoleta.test(boleta) || anio > anioActual) {
-        document.getElementById("boleta").classList.add("is-invalid");
-        document.getElementById("boleta").classList.remove("is-valid");
-        formValido = false;
-    } else {
-        document.getElementById("boleta").classList.remove("is-invalid");
-        document.getElementById("boleta").classList.add("is-valid");
-    }
+    if (!setValidacion("boleta", /^(20\d{2}63\d{4}|P[EP]\d{8})$/.test(boleta) && anio <= anioActual)) formValido = false;
 
     const nombre = document.getElementById("nombres").value.trim();
     const apellidoP = document.getElementById("apellidoP").value.trim();
     const apellidoM = document.getElementById("apellidoM").value.trim();
     const regexNombre = /^[A-Za-zÁÉÍÓÚÑáéíóúñ]{2,}(?:\s+[A-Za-zÁÉÍÓÚÑáéíóúñ]+)*$/;
 
-    if (!regexNombre.test(nombre)) {
-        document.getElementById("nombres").classList.add("is-invalid");
-        document.getElementById("nombres").classList.remove("is-valid");
-        formValido = false;
-    } else {
-        document.getElementById("nombres").classList.remove("is-invalid");
-        document.getElementById("nombres").classList.add("is-valid");
-    }
-
-    if (!regexNombre.test(apellidoP)) {
-        document.getElementById("apellidoP").classList.add("is-invalid");
-        document.getElementById("apellidoP").classList.remove("is-valid");
-        formValido = false;
-    } else {
-        document.getElementById("apellidoP").classList.remove("is-invalid");
-        document.getElementById("apellidoP").classList.add("is-valid");
-    }
-
-    if (!regexNombre.test(apellidoM)) {
-        document.getElementById("apellidoM").classList.add("is-invalid");
-        document.getElementById("apellidoM").classList.remove("is-valid");
-        formValido = false;
-    } else {
-        document.getElementById("apellidoM").classList.remove("is-invalid");
-        document.getElementById("apellidoM").classList.add("is-valid");
-    }
+    if (!setValidacion("nombres", regexNombre.test(nombre))) formValido = false;
+    if (!setValidacion("apellidoP", regexNombre.test(apellidoP))) formValido = false;
+    if (!setValidacion("apellidoM", regexNombre.test(apellidoM))) formValido = false;
 
     const fechaNacimiento = document.getElementById("fechaNacimiento").value;
+    let edadValida = false;
     if (fechaNacimiento) {
         const fechaNac = new Date(fechaNacimiento);
         const hoy = new Date();
         let edad = hoy.getFullYear() - fechaNac.getFullYear();
         const mes = hoy.getMonth() - fechaNac.getMonth();
         if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNac.getDate())) edad--;
-
-        if (edad < 17) {
-            document.getElementById("fechaNacimiento").classList.add("is-invalid");
-            document.getElementById("fechaNacimiento").classList.remove("is-valid");
-            formValido = false;
-        } else {
-            document.getElementById("fechaNacimiento").classList.remove("is-invalid");
-            document.getElementById("fechaNacimiento").classList.add("is-valid");
-        }
+        edadValida = edad >= 17;
     }
+    if (!setValidacion("fechaNacimiento", edadValida)) formValido = false;
 
     const telefono = document.getElementById("telefono").value.trim();
-    const regexTel = /^[2-9]\d{9}$/;
-    if (!regexTel.test(telefono)) {
-        document.getElementById("telefono").classList.add("is-invalid");
-        document.getElementById("telefono").classList.remove("is-valid");
-        formValido = false;
-    } else {
-        document.getElementById("telefono").classList.remove("is-invalid");
-        document.getElementById("telefono").classList.add("is-valid");
-    }
+    if (!setValidacion("telefono", /^[2-9]\d{9}$/.test(telefono))) formValido = false;
 
     const curp = document.getElementById("curp").value.trim().toUpperCase();
-    const nombresUpper = nombre.toUpperCase();
-    const apellidoPUpper = apellidoP.toUpperCase();
-    const apellidoMUpper = apellidoM.toUpperCase();
-    const genero = document.getElementById("genero").value;
-    let curpValido = true;
-
-    const regexCURP = /^[A-Z]{1}[AEIOUX]{1}[A-Z]{2}\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])[HM](AS|BC|BS|CC|CH|CL|CM|CS|DF|DG|GR|GT|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)[B-DF-HJ-NP-TV-XYZ]{3}[A-Z0-9]{1}\d{1}$/;
-
-    if (!regexCURP.test(curp)) {
-        curpValido = false;
-    } else {
+    let curpValido = /^[A-Z]{1}[AEIOUX]{1}[A-Z]{2}\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])[HM](AS|BC|BS|CC|CH|CL|CM|CS|DF|DG|GR|GT|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)[B-DF-HJ-NP-TV-XYZ]{3}[A-Z0-9]{1}\d{1}$/.test(curp);
+    
+    if (curpValido) {
+        const nombresUpper = nombre.toUpperCase();
+        const apellidoPUpper = apellidoP.toUpperCase();
+        const apellidoMUpper = apellidoM.toUpperCase();
+        const genero = document.getElementById("genero").value;
         const primeraVocalInternaAP = obtenerPrimeraVocalInterna(apellidoPUpper);
+        const nombreParaCURP = obtenerNombreParaCURP(nombresUpper);
+
         if (curp[0] !== apellidoPUpper[0]) curpValido = false;
         if (primeraVocalInternaAP && curp[1] !== primeraVocalInternaAP) curpValido = false;
         if (curp[2] !== apellidoMUpper[0]) curpValido = false;
-
-        const nombreParaCURP = obtenerNombreParaCURP(nombresUpper);
         if (curp[3] !== nombreParaCURP[0]) curpValido = false;
 
         if (fechaNacimiento) {
             const partes = fechaNacimiento.split("-");
-            const anioC = partes[0].slice(2);
-            const mesC  = partes[1];
-            const diaC  = partes[2];
-            if (curp.slice(4, 10) !== anioC + mesC + diaC) curpValido = false;
+            if (curp.slice(4, 10) !== partes[0].slice(2) + partes[1] + partes[2]) curpValido = false;
         }
 
-        if (genero === "Hombre" && curp[10] !== "H") curpValido = false;
-        if (genero === "Mujer"  && curp[10] !== "M") curpValido = false;
+        if ((genero === "Hombre" && curp[10] !== "H") || (genero === "Mujer" && curp[10] !== "M")) curpValido = false;
     }
+    if (!setValidacion("curp", curpValido)) formValido = false;
 
-    if (!curpValido) {
-        document.getElementById("curp").classList.add("is-invalid");
-        document.getElementById("curp").classList.remove("is-valid");
-        formValido = false;
-    } else {
-        document.getElementById("curp").classList.remove("is-invalid");
-        document.getElementById("curp").classList.add("is-valid");
-    }
     const escuela = document.getElementById("escuelaProcedencia").value;
-    const otraEscuela = document.getElementById("nombreOtraEscuela").value.trim();
+    const elOtraEscuela = document.getElementById("nombreOtraEscuela");
+    const otraEscuelaVal = elOtraEscuela.value.trim();
 
     if (escuela === "Otro") {
-        if (otraEscuela === "") {
-            document.getElementById("nombreOtraEscuela").classList.add("is-invalid");
-            document.getElementById("nombreOtraEscuela").classList.remove("is-valid");
-            formValido = false;
-        } else {
-            document.getElementById("nombreOtraEscuela").classList.remove("is-invalid");
-            document.getElementById("nombreOtraEscuela").classList.add("is-valid");
-        }
-    }
-    const correo = document.getElementById("correo").value.trim();
-    const regexCorreo = /^[a-zA-Z0-9._%+-]+@alumno\.ipn\.mx$/;
-    if (!regexCorreo.test(correo)) {
-        document.getElementById("correo").classList.add("is-invalid");
-        document.getElementById("correo").classList.remove("is-valid");
-        formValido = false;
+        if (!setValidacion("nombreOtraEscuela", otraEscuelaVal !== "")) formValido = false;
     } else {
-        document.getElementById("correo").classList.remove("is-invalid");
-        document.getElementById("correo").classList.add("is-valid");
+        elOtraEscuela.classList.remove("is-invalid", "is-valid");
+        elOtraEscuela.value = "";
     }
 
+    const correo = document.getElementById("correo").value.trim().toLowerCase();
+    const iniciaNombre = nombre.trim()[0]?.toLowerCase() || "";
+    const apPLower = apellidoP.trim().toLowerCase();
+    const iniciaMat = apellidoM.trim()[0]?.toLowerCase() || "";
+    const regexCorreo = new RegExp(`^${iniciaNombre}${apPLower}${iniciaMat}\\d{4}@alumno\\.ipn\\.mx$`);
+    if (!setValidacion("correo", regexCorreo.test(correo))) formValido = false;
+
     const password = document.getElementById("password").value;
-    const regexPassword = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
-    if (!regexPassword.test(password)) {
-        document.getElementById("password").classList.add("is-invalid");
-        document.getElementById("password").classList.remove("is-valid");
-        formValido = false;
-    } else {
-        document.getElementById("password").classList.remove("is-invalid");
-        document.getElementById("password").classList.add("is-valid");
-    }
+    if (!setValidacion("password", /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,}$/.test(password))) formValido = false;
+
     if (formValido) {
         document.getElementById("pantallaExito").classList.remove("d-none");
         setTimeout(() => {
@@ -159,7 +98,6 @@ document.getElementById("formularioRegistro").addEventListener("submit", functio
             document.getElementById("pantallaExito").classList.add("d-none");
         }, 3000);
     }
-
 });
 
 function obtenerPrimeraVocalInterna(apellido) {
