@@ -92,6 +92,7 @@ document.getElementById("formularioRegistro").addEventListener("submit", functio
 
     if (formValido) {
         document.getElementById("pantallaExito").classList.remove("d-none");
+        alert("¡Tus datos se registraron con éxito!");        
         setTimeout(() => {
             document.getElementById("formularioRegistro").reset();
             document.querySelectorAll(".is-valid").forEach(el => el.classList.remove("is-valid"));
