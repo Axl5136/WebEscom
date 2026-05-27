@@ -128,7 +128,11 @@ formulario.addEventListener("submit", function (event) {
     if (!setValidacion("promedio", promedioValido)) formValido = false;
 
     const correo = document.getElementById("correo").value.trim().toLowerCase();
-    if (!setValidacion("correo", /^[^\s@]+@alumno\.ipn\.mx$/.test(correo))) formValido = false;
+    const iniciaNombre = nombre.trim()[0]?.toLowerCase() || "";
+    const apPLower = apellidoP.trim().toLowerCase();
+    const iniciaMat = apellidoM.trim()[0]?.toLowerCase() || "";
+    const regexCorreo = new RegExp(`^${iniciaNombre}${apPLower}${iniciaMat}\\d{4}@alumno\\.ipn\\.mx$`);
+    if (!setValidacion("correo", regexCorreo.test(correo))) formValido = false;
 
     const password = document.getElementById("password").value;
     if (!setValidacion("password", /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,}$/.test(password))) formValido = false;
