@@ -43,28 +43,28 @@
                 <div class="card-body row g-3">
                     <div class="col-md-6">
                         <label class="form-label">Número de boleta</label>
-                        <input type="text" class="form-control" id="boleta" placeholder="Ej: 2022630000" required>
-                        <div id="errorBoleta" class="invalid-feedback">El numero de boleta es incorrecto. Debe ser '20**63****'</div>
+                        <input type="text" class="form-control" id="boleta" placeholder="Ej: 2022630000 o PE12345678" required>
+                        <div class="invalid-feedback">Debe ser 10 dígitos, PE + 8 dígitos o PP + 8 dígitos</div>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Nombre(s)</label>
                         <input type="text" class="form-control" id="nombres" placeholder="Ej: Juan Carlos" required>
-                        <div id="errornombre" class="invalid-feedback">El o los Nombres son incorrectos</div>
+                        <div class="invalid-feedback">El o los nombres son incorrectos</div>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Apellido paterno</label>
                         <input type="text" class="form-control" id="apellidoP" placeholder="Ej: García" required>
-                        <div id="errorApellidoP" class="invalid-feedback">El Apellido Paterno es incorrecto</div>
+                        <div class="invalid-feedback">El apellido paterno es incorrecto</div>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Apellido materno</label>
                         <input type="text" class="form-control" id="apellidoM" placeholder="Ej: López" required>
-                        <div id="errorApellidoM" class="invalid-feedback">El Apellido Materno es incorrecto</div>
+                        <div class="invalid-feedback">El apellido materno es incorrecto</div>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Fecha de nacimiento</label>
                         <input type="date" class="form-control" id="fechaNacimiento" required>
-                        <div id="errorApellidoM" class="invalid-feedback">Necesitas tener minimo 17</div>
+                        <div class="invalid-feedback">Debes tener al menos 17 años</div>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Género</label>
@@ -72,13 +72,13 @@
                             <option value="" selected disabled>Selecciona...</option>
                             <option value="Mujer">Mujer</option>
                             <option value="Hombre">Hombre</option>
-                            <option value="Otro">Otro</option>
                         </select>
+                        <div class="invalid-feedback">Selecciona un género</div>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">CURP</label>
                         <input type="text" class="form-control" id="curp" placeholder="18 caracteres" maxlength="18" required>
-                        <div id="errorCurp" class="invalid-feedback">El CURP es incorrecto</div>
+                        <div class="invalid-feedback">El CURP es incorrecto</div>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Entidad federativa de procedencia</label>
@@ -117,11 +117,12 @@
                             <option value="Yucatán">Yucatán</option>
                             <option value="Zacatecas">Zacatecas</option>
                         </select>
+                        <div class="invalid-feedback">Selecciona una entidad federativa</div>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Teléfono</label>
-                        <input type="tel" class="form-control" id="telefono" placeholder="Solo números" required>
-                        <div id="errorTel" class="invalid-feedback">Necesitan ser 10 numeros</div>
+                        <input type="tel" class="form-control" id="telefono" placeholder="10 dígitos" required>
+                        <div class="invalid-feedback">Deben ser 10 dígitos y no pueden empezar con 0 ni 1</div>
                     </div>
                 </div>
             </div>
@@ -134,7 +135,6 @@
                 <div class="card-body row g-3">
                     <div class="col-md-6">  
                         <label class="form-label">Escuela de procedencia</label>
-                        <!-- FASE 2: Llenar con escuelas y programar onchange para "Otro" -->
                         <select class="form-select" id="escuelaProcedencia" required>
                             <option value="" selected disabled>Selecciona tu escuela...</option>
                             <option value="CECyT 1">CECyT 1 "Gonzalo Vázquez Vela"</option>
@@ -159,15 +159,17 @@
                             <option value="CET 1">CET 1 "Walter Cross Buchanan"</option>
                             <option value="Otro">Otro</option>
                         </select>
+                        <div class="invalid-feedback">Selecciona una escuela de procedencia</div>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Nombre de la escuela (Si elegiste 'Otro')</label>
-                        <input type="text" class="form-control" id="nombreOtraEscuela" placeholder="Especificar escuela">
-                        <div id="errorOtraEscuela" class="invalid-feedback">Debes especificar el nombre de la escuela</div>
+                        <input type="text" class="form-control" id="nombreOtraEscuela" placeholder="Especificar escuela" disabled>
+                        <div class="invalid-feedback">Debes especificar el nombre de la escuela</div>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Promedio</label>
                         <input type="number" step="0.1" min="6.0" max="10.0" class="form-control" id="promedio" placeholder="Ej: 8.5" required>
+                        <div class="invalid-feedback">El promedio debe ser un número entre 6.0 y 10.0</div>
                     </div>
                 </div>
             </div>
@@ -181,11 +183,12 @@
                     <div class="col-md-6">
                         <label class="form-label">Correo electrónico institucional</label>
                         <input type="email" class="form-control" id="correo" placeholder="usuario@alumno.ipn.mx" required>
-                        <div id="errorCorreo" class="invalid-feedback">El correo es incorrecto</div>
+                        <div class="invalid-feedback">Debe ser un correo @alumno.ipn.mx</div>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Contraseña</label>
                         <input type="password" class="form-control" id="password" required>
+                        <div class="invalid-feedback">Mínimo 6 caracteres, 1 mayúscula, 1 dígito y 1 carácter especial</div>
                         <div class="form-text">Mínimo 6 caracteres, 1 mayúscula, 1 dígito y 1 carácter especial.</div>
                     </div>
                 </div>
@@ -198,9 +201,7 @@
             </div>
         </form>
 
-        <div id="pantallaExito" class="d-none alert alert-success mt-4">
-            <!-- FASE 3: Se llenará con JS -->
-        </div>
+        <div id="pantallaExito" class="d-none alert alert-success mt-4" role="alert"></div>
     </main>
 
    <footer>
@@ -223,7 +224,10 @@
                 </ul>
             </div>
         </div>
-        <img src="imgs/logoESCOMBlanco.png" alt="Logo ESCOM" style="max-height: 65px;">
+        <div class="d-flex align-items-center gap-2">
+            <img src="imgs/Logo_Equipo.png" alt="Logo del equipo" style="max-height: 65px;">
+            <img src="imgs/logoESCOMBlanco.png" alt="Logo ESCOM" style="max-height: 65px;">
+        </div>
     </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
