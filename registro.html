@@ -43,7 +43,7 @@
                 <div class="card-body row g-3">
                     <div class="col-md-6">
                         <label class="form-label">Número de boleta</label>
-                        <input type="text" class="form-control" id="boleta" placeholder="Ej: 2022630000 o PE12345678" required>
+                        <input type="text" class="form-control" id="boleta" name="boleta" placeholder="Ej: 2022630000 o PE12345678" required>
                         <div class="invalid-feedback">Debe ser 10 dígitos, PE + 8 dígitos o PP + 8 dígitos</div>
                     </div>
                     <div class="col-md-6">
@@ -63,12 +63,12 @@
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Fecha de nacimiento</label>
-                        <input type="date" class="form-control" id="fechaNacimiento" required>
+                        <input type="date" class="form-control" id="fechaNacimiento" name="fecha_nacimiento" required>
                         <div class="invalid-feedback">Debes tener al menos 17 años</div>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Género</label>
-                        <select class="form-select" id="genero" required>
+                        <select class="form-select" id="genero" name="genero" required>
                             <option value="" selected disabled>Selecciona...</option>
                             <option value="Mujer">Mujer</option>
                             <option value="Hombre">Hombre</option>
@@ -77,12 +77,12 @@
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">CURP</label>
-                        <input type="text" class="form-control" id="curp" placeholder="18 caracteres" maxlength="18" required>
+                        <input type="text" class="form-control" id="curp" name="curp" placeholder="18 caracteres" maxlength="18" required>
                         <div class="invalid-feedback">El CURP es incorrecto</div>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Entidad federativa de procedencia</label>
-                        <select class="form-select" id="entidad" required>
+                        <select class="form-select" id="entidad" name="estado_procedencia" required>
                             <option value="" selected disabled>Selecciona un estado...</option>
                             <option value="Aguascalientes">Aguascalientes</option>
                             <option value="Baja California">Baja California</option>
@@ -121,7 +121,7 @@
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Teléfono</label>
-                        <input type="tel" class="form-control" id="telefono" placeholder="10 dígitos" required>
+                        <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="10 dígitos" required>
                         <div class="invalid-feedback">Deben ser 10 dígitos y no pueden empezar con 0 ni 1</div>
                     </div>
                 </div>
@@ -135,7 +135,7 @@
                 <div class="card-body row g-3">
                     <div class="col-md-6">  
                         <label class="form-label">Escuela de procedencia</label>
-                        <select class="form-select" id="escuelaProcedencia" required>
+                        <select class="form-select" id="escuelaProcedencia" name="escuela_procedencia" required>
                             <option value="" selected disabled>Selecciona tu escuela...</option>
                             <option value="CECyT 1">CECyT 1 "Gonzalo Vázquez Vela"</option>
                             <option value="CECyT 2">CECyT 2 "Miguel Bernard Perales"</option>
@@ -163,12 +163,12 @@
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Nombre de la escuela (Si elegiste 'Otro')</label>
-                        <input type="text" class="form-control" id="nombreOtraEscuela" placeholder="Especificar escuela" disabled>
+                        <input type="text" class="form-control" id="nombreOtraEscuela" name="nombre_escuela" placeholder="Especificar escuela" disabled>
                         <div class="invalid-feedback">Debes especificar el nombre de la escuela</div>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Promedio</label>
-                        <input type="number" step="0.1" min="6.0" max="10.0" class="form-control" id="promedio" placeholder="Ej: 8.5" required>
+                        <input type="number" step="0.1" min="6.0" max="10.0" class="form-control" id="promedio" name="promedio" placeholder="Ej: 8.5" required>
                         <div class="invalid-feedback">El promedio debe ser un número entre 6.0 y 10.0</div>
                     </div>
                 </div>
@@ -182,13 +182,13 @@
                 <div class="card-body row g-3">
                     <div class="col-md-6">
                         <label class="form-label">Correo electrónico institucional</label>
-                        <input type="email" class="form-control" id="correo" placeholder="jgarcial1234@alumno.ipn.mx" required>
+                        <input type="email" class="form-control" name="correo_institucional" id="correo"placeholder="jgarcial1234@alumno.ipn.mx" required>
                         <div class="invalid-feedback">Debe seguir el formato: inicial + apellido paterno + inicial apellido materno + 4 dígitos @alumno.ipn.mx</div>
                         <div class="form-text">Ejemplo: Juan García López → jgarcíal1234@alumno.ipn.mx</div>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="password" required>
+                        <input type="password" class="form-control" id="password" name="contrasena" required>
                         <div class="invalid-feedback">Mínimo 6 caracteres, 1 mayúscula, 1 dígito y 1 carácter especial</div>
                         <div class="form-text">Mínimo 6 caracteres, 1 mayúscula, 1 dígito y 1 carácter especial.</div>
                     </div>
@@ -233,5 +233,6 @@
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="js/registro.js"></script>
+    <script src="js/registro_ajax.js"></script>
 </body>
 </html>
