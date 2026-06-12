@@ -4,7 +4,6 @@ require_once 'conexion.php';
 
 header('Content-Type: application/json');
 
-// --- Recibir datos del formulario ---
 $boleta              = $_POST['boleta']              ?? '';
 $nombre_completo     = $_POST['nombre_completo']     ?? '';
 $fecha_nacimiento    = $_POST['fecha_nacimiento']    ?? '';
@@ -18,7 +17,6 @@ $promedio            = $_POST['promedio']            ?? '';
 $correo_institucional= $_POST['correo_institucional']?? '';
 $contrasena          = $_POST['contrasena']          ?? '';
 
-// --- Encriptar contraseña ---
 $contrasena_hash = password_hash($contrasena, PASSWORD_DEFAULT);
 
 // --- Asignar grupo y horario aleatoriamente ---

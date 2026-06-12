@@ -1,0 +1,106 @@
+<?php
+session_start();
+
+// Verificar si el usuario inició sesión
+if (!isset($_SESSION['boleta'])) {
+    header('Location: cuenta.html'); 
+    exit;
+}
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil del Alumno</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+    <!-- Menú de Navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="imgs/logoESCOMBlanco.png" alt="Logo IPN">
+                <span class="ms-2 fs-5 fw-bold d-none d-sm-block">Perfil</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="registro.html">Registro</a></li>
+                    <li class="nav-item"><a class="nav-link" href="admin.html">Admin</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="cuenta.html">Cuenta</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card shadow mt-5">
+                    <div class="card-header text-center text-white" style="background-color: var(--escom-azul);">
+                        <h4 class="mb-0">Bienvenido, <?php echo $_SESSION['nombre_completo']; ?></h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <h5 class="text-center mb-3">Información de tu Examen</h5>
+                        <hr>
+                        <p class="fs-5 mb-2">
+                            <strong>Grupo asignado:</strong> 
+                            <span class="text-primary fw-bold"><?php echo $_SESSION['grupo_asignado']; ?></span>
+                        </p>
+                        <p class="fs-5 mb-4">
+                            <strong>Horario de examen:</strong> 
+                            <span class="text-primary fw-bold"><?php echo $_SESSION['horario_examen']; ?></span>
+                        </p>
+
+                        <div class="d-grid gap-3">
+                            <a href="generar_pdf.php" target="_blank" class="btn btn-primary btn-lg">
+                                Imprimir Acuse
+                            </a>
+                            <a href="logout.php" class="btn btn-outline-danger btn-lg">
+                                Cerrar Sesión
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer institucional -->
+    <footer>
+        <div class="container d-flex justify-content-between align-items-center py-3">
+            <img src="imgs/IPN-Logo.png" alt="Logo IPN" style="max-height: 65px;">
+            
+            <div class="contenedor-central-footer">
+                <div class="bloque-texto">
+                    <p class="mb-0">Instituto Politécnico Nacional - ESCOM &copy; 2026</p>
+                    <small>Desarrollado para la materia Tecnologías para el Desarrollo de Aplicaciones Web</small>
+                </div>
+                <div class="bloque-redes">
+                    <small class="fw-bold titulo-redes-small">Redes sociales</small>
+                    <ul class="list-unstyled mb-0 lista-redes-footer">
+                        <li><a href="https://www.facebook.com/share/1BSBQNFr3F/" class="footer-link">Facebook:escomipnmx</a></li>
+                        <li><a href="https://www.instagram.com/escom_ipn_mx" class="footer-link">Instagram:escom_ipn_mx</a></li>
+                        <li><a href="https://www.tiktok.com/@escom_ipn_mx" class="footer-link">TikTok:escom_ipn_mx</a></li>
+                        <li><a href="https://x.com/escomunidad/" class="footer-link">Twitter:@escomunidad</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <img src="imgs/Logo_Equipo.png" alt="Logo del equipo" style="max-height: 65px;">
+                <img src="imgs/logoESCOMBlanco.png" alt="Logo ESCOM" style="max-height: 65px;">
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
