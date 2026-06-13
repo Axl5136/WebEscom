@@ -1,12 +1,10 @@
 <?php
-// --- Configuración de la conexión ---
 define('DB_HOST',    'localhost');
 define('DB_NAME',    'escom_registro');
 define('DB_USER',    'root');
 define('DB_PASS',    '');
 define('DB_CHARSET', 'utf8mb4');
 
-// --- Intento de conexión ---
 try {
 
     $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
@@ -21,7 +19,6 @@ try {
 
 } catch (PDOException $e) {
 
-    // --- Error: respuesta en JSON para AJAX ---
     http_response_code(500);
     header('Content-Type: application/json');
 

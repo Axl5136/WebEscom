@@ -44,7 +44,6 @@ class PDF extends FPDF
     }
 }
 
-// Crear el PDF
 $pdf = new PDF('P', 'mm', 'Letter');
 $pdf->AddPage();
 
@@ -67,7 +66,7 @@ $pdf->Cell(0, 10, $_SESSION['nombre_completo'], 0, 1);
 
 $pdf->Ln(8);
 
-// Sección destacada: Grupo y Horario
+// Grupo y Horario
 $pdf->SetFillColor(230, 240, 255);
 $pdf->Rect(10, $pdf->GetY(), 190, 25, 'F');
 
@@ -84,7 +83,7 @@ $pdf->Cell(0, 10, $_SESSION['horario_examen'], 0, 1);
 $pdf->SetTextColor(0, 0, 0);
 $pdf->Ln(15);
 
-// Sección de firma / validación
+//Firma / validación
 $pdf->SetFont('Arial', '', 10);
 $pdf->Cell(0, 6, 'Codigo de validacion: ' . strtoupper(substr(md5($_SESSION['boleta'] . date('Ymd')), 0, 10)), 0, 1, 'L');
 $pdf->Ln(15);

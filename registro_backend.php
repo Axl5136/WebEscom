@@ -19,14 +19,12 @@ $contrasena          = $_POST['contrasena']          ?? '';
 
 $contrasena_hash = password_hash($contrasena, PASSWORD_DEFAULT);
 
-// --- Asignar grupo y horario aleatoriamente ---
 $grupos   = ['1CM1', '1CM2', '1CM3'];
 $horarios = ['08:00 - 10:00', '10:00 - 12:00', '12:00 - 14:00'];
 
 $grupo_asignado = $grupos[array_rand($grupos)];
 $horario_examen = $horarios[array_rand($horarios)];
 
-// --- Insertar en la base de datos ---
 try {
 
     $sql = "INSERT INTO alumnos (
@@ -80,7 +78,6 @@ try {
         ':horario_examen'       => $horario_examen,
     ]);
 
-    // --- Respuesta exitosa con todos los datos ---
     echo json_encode([
         'success' => true,
         'datos'   => [
@@ -102,7 +99,6 @@ try {
 
 } catch (PDOException $e) {
 
-    // --- Mensaje amigable para boleta o CURP duplicados ---
     $mensaje = 'Ocurrió un error al guardar los datos.';
 
     if ($e->getCode() == 23000) {

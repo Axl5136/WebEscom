@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Verificar si el usuario inició sesión
 if (!isset($_SESSION['boleta'])) {
     header('Location: cuenta.html'); 
     exit;
@@ -13,13 +12,11 @@ if (!isset($_SESSION['boleta'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil del Alumno</title>
-    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
 
-    <!-- Menú de Navegación -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
@@ -40,7 +37,6 @@ if (!isset($_SESSION['boleta'])) {
         </div>
     </nav>
 
-    <!-- Contenido principal -->
     <main class="container my-5">
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-5">
@@ -74,7 +70,6 @@ if (!isset($_SESSION['boleta'])) {
         </div>
     </main>
 
-    <!-- Footer institucional -->
     <footer>
         <div class="container d-flex justify-content-between align-items-center py-3">
             <img src="imgs/IPN-Logo.png" alt="Logo IPN" style="max-height: 65px;">
