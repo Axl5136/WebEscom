@@ -2,6 +2,8 @@ const formulario = document.getElementById("formularioRegistro");
 const escuelaSelect = document.getElementById("escuelaProcedencia");
 const nombreOtraEscuela = document.getElementById("nombreOtraEscuela");
 
+let datosPendientes = null;
+
 function setValidacion(id, esValido) {
     const el = document.getElementById(id);
     if (esValido) {
@@ -139,74 +141,88 @@ formulario.addEventListener("submit", function (event) {
 
     if (formValido) {
 
-        const datos = new FormData();
-        datos.append("boleta",               boleta);
-        datos.append("nombre_completo",      nombreCompleto);
-        datos.append("fecha_nacimiento",     fechaNacimiento);
-        datos.append("genero",               genero);
-        datos.append("curp",                 curp);
-        datos.append("estado_procedencia",   entidad);
-        datos.append("telefono",             telefono);
-        datos.append("escuela_procedencia",  escuela);
-        datos.append("nombre_escuela",       otraEscuelaVal);
-        datos.append("promedio",             promedioVal);
-        datos.append("correo_institucional", correo);
-        datos.append("contrasena",           password);
+        document.getElementById("confBoleta").textContent = boleta;
+        document.getElementById("confNombre").textContent = nombreCompleto;
+        document.getElementById("confCurp").textContent = curp;
+        document.getElementById("confTelefono").textContent = telefono;
+        document.getElementById("confCorreo").textContent = correo;
 
-        fetch("registro_backend.php", {
-            method: "POST",
-            body: datos
-        })
-        .then(function (respuesta) {
-            return respuesta.json();
-        })
-        .then(function (data) {
+        datosPendientes = new FormData();
+        datosPendientes.append("boleta", boleta);
+        datosPendientes.append("nombre_completo", nombreCompleto);
+        datosPendientes.append("fecha_nacimiento", fechaNacimiento);
+        datosPendientes.append("genero", genero);
+        datosPendientes.append("curp", curp);
+        datosPendientes.append("estado_procedencia", entidad);
+        datosPendientes.append("telefono", telefono);
+        datosPendientes.append("escuela_procedencia", escuela);
+        datosPendientes.append("nombre_escuela", otraEscuelaVal);
+        datosPendientes.append("promedio", promedioVal);
+        datosPendientes.append("correo_institucional", correo);
+        datosPendientes.append("contrasena", password);
 
-            if (data.success === true) {
-
-                const d = data.datos;
-                const nombreEscuela = d.nombre_escuela ? d.nombre_escuela : "N/A";
-                const pantallaExito = document.getElementById("pantallaExito");
-
-                pantallaExito.innerHTML = `
-                    <h5 class="alert-heading">¡Registro exitoso!</h5>
-                    <p>Hola <strong>${d.nombre_completo}</strong>, verifica que los datos que ingresaste sean correctos:</p>
-                    <hr>
-                    <ul class="mb-2">
-                        <li><strong>Boleta:</strong> ${d.boleta}</li>
-                        <li><strong>Fecha de nacimiento:</strong> ${d.fecha_nacimiento}</li>
-                        <li><strong>Género:</strong> ${d.genero}</li>
-                        <li><strong>CURP:</strong> ${d.curp}</li>
-                        <li><strong>Estado:</strong> ${d.estado_procedencia}</li>
-                        <li><strong>Teléfono:</strong> ${d.telefono}</li>
-                        <li><strong>Escuela de procedencia:</strong> ${d.escuela_procedencia}</li>
-                        <li><strong>Nombre de la escuela:</strong> ${nombreEscuela}</li>
-                        <li><strong>Promedio:</strong> ${d.promedio}</li>
-                        <li><strong>Correo:</strong> ${d.correo_institucional}</li>
-                    </ul>
-                    <hr>
-                    <p class="mb-1"><strong>Grupo asignado:</strong> ${d.grupo_asignado}</p>
-                    <p class="mb-0"><strong>Horario de examen:</strong> ${d.horario_examen}</p>
-                    <p class="mt-2 text-muted"><small>El formulario se reiniciará en 5 segundos...</small></p>
-                `;
-
-                pantallaExito.classList.remove("d-none");
-                pantallaExito.scrollIntoView({ behavior: "smooth", block: "nearest" });
-
-                setTimeout(function () {
-                    formulario.reset();
-                }, 5000);
-
-            } else {
-                alert("Error: " + data.mensaje);
-            }
-
-        })
-        .catch(function (error) {
-            alert("No se pudo conectar con el servidor. Verifica que XAMPP esté encendido e inténtalo de nuevo.");
-            console.error("Error de red:", error);
-        });
+        const modalConfirmacion = new bootstrap.Modal(document.getElementById("modalConfirmacion"));
+        modalConfirmacion.show();
     }
+});
+
+document.getElementById("btnConfirmarRegistro").addEventListener("click", function() {
+    if (!datosPendientes) return;
+
+    const modalElement = document.getElementById("modalConfirmacion");
+    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+    modalInstance.hide();
+
+    fetch("registro_backend.php", {
+        method: "POST",
+        body: datosPendientes
+    })
+    .then(function (respuesta) {
+        return respuesta.json();
+    })
+    .then(function (data) {
+        if (data.success === true) {
+            const d = data.datos;
+            const nombreEscuela = d.nombre_escuela ? d.nombre_escuela : "N/A";
+            const pantallaExito = document.getElementById("pantallaExito");
+
+            pantallaExito.innerHTML = `
+                <h5 class="alert-heading">¡Registro exitoso!</h5>
+                <p>Hola <strong>${d.nombre_completo}</strong>, verifica que los datos que ingresaste sean correctos:</p>
+                <hr>
+                <ul class="mb-2">
+                    <li><strong>Boleta:</strong> ${d.boleta}</li>
+                    <li><strong>Fecha de nacimiento:</strong> ${d.fecha_nacimiento}</li>
+                    <li><strong>Género:</strong> ${d.genero}</li>
+                    <li><strong>CURP:</strong> ${d.curp}</li>
+                    <li><strong>Estado:</strong> ${d.estado_procedencia}</li>
+                    <li><strong>Teléfono:</strong> ${d.telefono}</li>
+                    <li><strong>Escuela de procedencia:</strong> ${d.escuela_procedencia}</li>
+                    <li><strong>Nombre de la escuela:</strong> ${nombreEscuela}</li>
+                    <li><strong>Promedio:</strong> ${d.promedio}</li>
+                    <li><strong>Correo:</strong> ${d.correo_institucional}</li>
+                </ul>
+                <hr>
+                <p class="mb-1"><strong>Grupo asignado:</strong> ${d.grupo_asignado}</p>
+                <p class="mb-0"><strong>Horario de examen:</strong> ${d.horario_examen}</p>
+                <p class="mt-2 text-muted"><small>El formulario se reiniciará en 5 segundos...</small></p>
+            `;
+
+            pantallaExito.classList.remove("d-none");
+            pantallaExito.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+            setTimeout(function () {
+                formulario.reset();
+            }, 5000);
+
+        } else {
+            alert("Error: " + data.mensaje);
+        }
+    })
+    .catch(function (error) {
+        alert("No se pudo conectar con el servidor. Verifica que XAMPP esté encendido e inténtalo de nuevo.");
+        console.error("Error de red:", error);
+    });
 });
 
 actualizarCampoOtraEscuela();

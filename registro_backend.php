@@ -19,8 +19,32 @@ $contrasena          = $_POST['contrasena']          ?? '';
 
 $contrasena_hash = password_hash($contrasena, PASSWORD_DEFAULT);
 
-$grupos   = ['1CM1', '1CM2', '1CM3'];
-$horarios = ['08:00 - 10:00', '10:00 - 12:00', '12:00 - 14:00'];
+$grupos   = ['1CM1', '1CM2', '1CM3', '1CM4', '1CM5'];
+$horarios = ['10:00 - 12:00', '12:00 - 14:00'];
+
+$grupo_asignado = null;
+$horario_examen = null;
+
+foreach ($horarios as $horario) {
+    foreach ($grupos as $grupo) {
+        $stmtCount = $pdo->prepare(
+            "SELECT COUNT(*) FROM alumnos WHERE grupo_asignado = :grupo AND horario_examen = :horario"
+        );
+        $stmtCount->execute([':grupo' => $grupo, ':horario' => $horario]);
+        $cantidad = $stmtCount->fetchColumn();
+
+        if ($cantidad < 30) {
+            $grupo_asignado = $grupo;
+            $horario_examen = $horario;
+            break 2;
+        }
+    }
+}
+
+if ($grupo_asignado === null) {
+    echo json_encode(['success' => false, 'mensaje' => 'No hay lugares disponibles en ningún laboratorio ni horario.']);
+    exit;
+}
 
 $grupo_asignado = $grupos[array_rand($grupos)];
 $horario_examen = $horarios[array_rand($horarios)];

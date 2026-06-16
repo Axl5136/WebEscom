@@ -68,23 +68,40 @@ $pdf->Ln(8);
 
 // Grupo y Horario
 $pdf->SetFillColor(230, 240, 255);
-$pdf->Rect(10, $pdf->GetY(), 190, 25, 'F');
+$pdf->Rect(10, $pdf->GetY(), 190, 45, 'F');
 
 $pdf->SetFont('Arial', 'B', 12);
 $pdf->SetTextColor(0, 86, 179);
 
 $pdf->Ln(4);
+$laboratorios = [
+    '1CM1' => 'Laboratorio 1',
+    '1CM2' => 'Laboratorio 2',
+    '1CM3' => 'Laboratorio 3',
+    '1CM4' => 'Laboratorio 4',
+    '1CM5' => 'Laboratorio 5',
+];
+$laboratorio = $laboratorios[$_SESSION['grupo_asignado']] ?? 'Por asignar';
+
 $pdf->Cell(50, 10, '   Grupo asignado:', 0, 0);
 $pdf->Cell(0, 10, $_SESSION['grupo_asignado'], 0, 1);
 
+$pdf->Cell(50, 10, '   Laboratorio:', 0, 0);
+$pdf->Cell(0, 10, $laboratorio, 0, 1);
+
 $pdf->Cell(50, 10, '   Horario de examen:', 0, 0);
 $pdf->Cell(0, 10, $_SESSION['horario_examen'], 0, 1);
+
+$pdf->Cell(50, 10, '   Duracion del examen:', 0, 0);
+$pdf->Cell(0, 10, '90 minutos', 0, 1);
 
 $pdf->SetTextColor(0, 0, 0);
 $pdf->Ln(15);
 
 //Firma / validación
 $pdf->SetFont('Arial', '', 10);
+$pdf->Cell(0, 6, utf8_decode('Favor de presentar este acuse el día del examen para su validación.'), 0, 1, 'L');
+$pdf->Cell(0, 6, 'Favor de llegar con tiempo al laboratorio.', 0, 1, 'L');
 $pdf->Cell(0, 6, 'Codigo de validacion: ' . strtoupper(substr(md5($_SESSION['boleta'] . date('Ymd')), 0, 10)), 0, 1, 'L');
 $pdf->Ln(15);
 
@@ -96,4 +113,4 @@ $pdf->Cell(90, 6, 'Firma del Aspirante', 0, 0, 'C');
 $pdf->Cell(10, 6, '', 0, 0);
 $pdf->Cell(90, 6, 'Sello / Autorizacion', 0, 1, 'C');
 
-$pdf->Output('I', 'Acuse_Registro.pdf');
+$pdf->Output('I', $_SESSION['boleta'] . '.pdf');

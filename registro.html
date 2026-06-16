@@ -201,8 +201,8 @@
                 <button type="submit" class="btn btn-success px-4" style="background-color: var(--ipn-guinda); border-color: var(--ipn-guinda);">Registrar</button>
             </div>
         </form>
-
         <div id="pantallaExito" class="d-none alert alert-success mt-4" role="alert"></div>
+
     </main>
 
    <footer>
@@ -231,6 +231,33 @@
         </div>
     </div>
     </footer>
+    <div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-labelledby="modalConfirmacionLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="modalConfirmacionLabel">Confirma tus datos</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Revisa que tu información sea correcta antes de finalizar el registro:</p>
+                    <ul class="list-group mb-3">
+                        <li class="list-group-item"><strong>Boleta:</strong> <span id="confBoleta"></span></li>
+                        <li class="list-group-item"><strong>Nombre:</strong> <span id="confNombre"></span></li>
+                        <li class="list-group-item"><strong>CURP:</strong> <span id="confCurp"></span></li>
+                        <li class="list-group-item"><strong>Teléfono:</strong> <span id="confTelefono"></span></li>
+                        <li class="list-group-item"><strong>Correo:</strong> <span id="confCorreo"></span></li>
+                    </ul>
+                    <div class="alert alert-warning" role="alert">
+                        Si algún dato es incorrecto, cierra esta ventana y corrígelo.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regresar a editar</button>
+                    <button type="button" class="btn btn-success" id="btnConfirmarRegistro">Sí, Registrar ahora</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="js/registro.js"></script>
 </body>
