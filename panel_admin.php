@@ -75,6 +75,7 @@ $alumnos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <td><?php echo htmlspecialchars($alumno['horario_examen']); ?></td>
                     <td>
                         <a href="editar_alumno.php?boleta=<?php echo htmlspecialchars($alumno['boleta']); ?>" class="btn btn-warning btn-sm">Editar</a>
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalEliminar" data-boleta="<?php echo htmlspecialchars($alumno['boleta']); ?>" data-nombre="<?php echo htmlspecialchars($alumno['nombre_completo']); ?>">Eliminar</button>
                     </td>
                 </tr>
                 <?php endforeach; ?>
@@ -83,6 +84,39 @@ $alumnos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
 </div>
+<div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="modalEliminarLabel">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="modalEliminarLabel">Confirmar eliminación</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de que deseas eliminar al alumno <strong id="nombreAlumnoEliminar"></strong> (boleta <strong id="boletaAlumnoEliminar"></strong>)?</p>
+                <p class="text-danger mb-0">Esta acción no se puede deshacer.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <a href="#" id="btnConfirmarEliminar" class="btn btn-danger">Sí, eliminar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const modalEliminar = document.getElementById('modalEliminar');
+    modalEliminar.addEventListener('show.bs.modal', function (event) {
+        const boton = event.relatedTarget;
+        const boleta = boton.getAttribute('data-boleta');
+        const nombre = boton.getAttribute('data-nombre');
+
+        document.getElementById('nombreAlumnoEliminar').textContent = nombre;
+        document.getElementById('boletaAlumnoEliminar').textContent = boleta;
+        document.getElementById('btnConfirmarEliminar').href = 'eliminar_alumno.php?boleta=' + encodeURIComponent(boleta);
+    });
+</script>
+
 <footer>
 <div class="container d-flex justify-content-between align-items-center py-3">
     <img src="imgs/IPN-Logo.png" alt="Logo IPN" style="max-height: 65px;">

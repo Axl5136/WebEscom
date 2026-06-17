@@ -128,16 +128,19 @@ formulario.addEventListener("submit", function (event) {
     const promedioNum = parseFloat(promedioVal);
     const promedioValido = /^\d+(\.\d+)?$/.test(promedioVal) && promedioNum >= 6.0 && promedioNum <= 10.0;
     if (!setValidacion("promedio", promedioValido)) formValido = false;
-
-    const correo = document.getElementById("correo").value.trim().toLowerCase();
-    const iniciaNombre = nombre.trim()[0]?.toLowerCase() || "";
-    const apPLower = apellidoP.trim().toLowerCase();
-    const iniciaMat = apellidoM.trim()[0]?.toLowerCase() || "";
-    const regexCorreo = new RegExp(`^${iniciaNombre}${apPLower}${iniciaMat}\\d{4}@alumno\\.ipn\\.mx$`);
+        const correo = document.getElementById("correo").value.trim().toLowerCase();
+        const iniciaNombre = quitarAcentos(nombre.trim()[0]?.toLowerCase() || "");
+        const apPLower = quitarAcentos(apellidoP.trim().toLowerCase());
+        const iniciaMat = quitarAcentos(apellidoM.trim()[0]?.toLowerCase() || "");
+        const regexCorreo = new RegExp(`^${iniciaNombre}${apPLower}${iniciaMat}\\d{4}@alumno\\.ipn\\.mx$`);
     if (!setValidacion("correo", regexCorreo.test(correo))) formValido = false;
 
     const password = document.getElementById("password").value;
     if (!setValidacion("password", /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,}$/.test(password))) formValido = false;
+
+    function quitarAcentos(texto){
+        return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
 
     if (formValido) {
 
