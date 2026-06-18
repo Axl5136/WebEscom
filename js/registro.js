@@ -146,8 +146,13 @@ formulario.addEventListener("submit", function (event) {
 
         document.getElementById("confBoleta").textContent = boleta;
         document.getElementById("confNombre").textContent = nombreCompleto;
+        document.getElementById("confFechaNacimiento").textContent = fechaNacimiento;
+        document.getElementById("confGenero").textContent = genero;
         document.getElementById("confCurp").textContent = curp;
+        document.getElementById("confEntidad").textContent = entidad;
         document.getElementById("confTelefono").textContent = telefono;
+        document.getElementById("confEscuela").textContent = escuela === "Otro" ? otraEscuelaVal : escuela;
+        document.getElementById("confPromedio").textContent = promedioVal;
         document.getElementById("confCorreo").textContent = correo;
 
         datosPendientes = new FormData();

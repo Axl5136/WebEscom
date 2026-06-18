@@ -47,6 +47,19 @@ if (!isset($_SESSION['boleta'])) {
                     <div class="card-body p-4">
                         <h5 class="text-center mb-3">Información de tu Examen</h5>
                         <hr>
+                        <p class="mb-2">
+                            <strong>Boleta:</strong> 
+                            <span><?php echo htmlspecialchars($_SESSION['boleta']); ?></span>
+                        </p>
+                        <p class="mb-2">
+                            <strong>CURP:</strong> 
+                            <span><?php echo htmlspecialchars($_SESSION['curp']); ?></span>
+                        </p>
+                        <p class="mb-3">
+                            <strong>Correo:</strong> 
+                            <span><?php echo htmlspecialchars($_SESSION['correo_institucional']); ?></span>
+                        </p>
+                        <hr>
                         <p class="fs-5 mb-2">
                             <strong>Grupo asignado:</strong> 
                             <span class="text-primary fw-bold"><?php echo $_SESSION['grupo_asignado']; ?></span>

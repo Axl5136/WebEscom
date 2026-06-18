@@ -1,6 +1,10 @@
 <?php
-
 session_start();
+
+if (!isset($_SESSION['id_admin'])) {
+    echo json_encode(['success' => false, 'mensaje' => 'Acceso denegado.']);
+    exit;
+}
 
 require_once 'conexion.php';
 
@@ -18,40 +22,26 @@ $nombre_escuela      = $_POST['nombre_escuela']      ?? null;
 $promedio            = $_POST['promedio']            ?? '';
 $correo_institucional= $_POST['correo_institucional']?? '';
 $contrasena          = $_POST['contrasena']          ?? '';
+$grupo_asignado      = $_POST['grupo_asignado']      ?? '';
+$horario_examen      = $_POST['horario_examen']      ?? '';
 
 $contrasena_hash = password_hash($contrasena, PASSWORD_DEFAULT);
 
-$grupos   = ['1CM1', '1CM2', '1CM3', '1CM4', '1CM5'];
-$horarios = ['08:00 - 09:30', '09:45 - 11:15'];
-
-$grupo_asignado = null;
-$horario_examen = null;
-
-foreach ($horarios as $horario) {
-    foreach ($grupos as $grupo) {
-        $stmtCount = $pdo->prepare(
-            "SELECT COUNT(*) FROM alumnos WHERE grupo_asignado = :grupo AND horario_examen = :horario"
-        );
-        $stmtCount->execute([':grupo' => $grupo, ':horario' => $horario]);
-        $cantidad = $stmtCount->fetchColumn();
-
-        if ($cantidad < 30) {
-            $grupo_asignado = $grupo;
-            $horario_examen = $horario;
-            break 2;
-        }
-    }
-}
-
-if ($grupo_asignado === null) {
-    echo json_encode(['success' => false, 'mensaje' => 'No hay lugares disponibles en ningún laboratorio ni horario.']);
-    exit;
-}
-
-$grupo_asignado = $grupos[array_rand($grupos)];
-$horario_examen = $horarios[array_rand($horarios)];
-
 try {
+
+    $stmtCount = $pdo->prepare(
+        "SELECT COUNT(*) FROM alumnos WHERE grupo_asignado = :grupo AND horario_examen = :horario"
+    );
+    $stmtCount->execute([':grupo' => $grupo_asignado, ':horario' => $horario_examen]);
+    $cantidad = $stmtCount->fetchColumn();
+
+    if ($cantidad >= 30) {
+        echo json_encode([
+            'success' => false,
+            'mensaje' => 'El grupo y horario seleccionados ya no tienen cupo disponible. Por favor selecciona otro.'
+        ]);
+        exit;
+    }
 
     $sql = "INSERT INTO alumnos (
                 boleta,
@@ -104,34 +94,11 @@ try {
         ':horario_examen'       => $horario_examen,
     ]);
 
-    $_SESSION['boleta'] = $boleta;
-    $_SESSION['nombre_completo'] = $nombre_completo;
-    $_SESSION['fecha_nacimiento'] = $fecha_nacimiento;
-    $_SESSION['genero'] = $genero;
-    $_SESSION['curp'] = $curp;
-    $_SESSION['estado_procedencia'] = $estado_procedencia;
-    $_SESSION['telefono'] = $telefono;
-    $_SESSION['escuela_procedencia'] = $escuela_procedencia;
-    $_SESSION['nombre_escuela'] = $nombre_escuela;
-    $_SESSION['promedio'] = $promedio;
-    $_SESSION['correo_institucional'] = $correo_institucional;
-    $_SESSION['grupo_asignado'] = $grupo_asignado;
-    $_SESSION['horario_examen'] = $horario_examen;
-
     echo json_encode([
         'success' => true,
         'datos'   => [
             'boleta'               => $boleta,
             'nombre_completo'      => $nombre_completo,
-            'fecha_nacimiento'     => $fecha_nacimiento,
-            'genero'               => $genero,
-            'curp'                 => $curp,
-            'estado_procedencia'   => $estado_procedencia,
-            'telefono'             => $telefono,
-            'escuela_procedencia'  => $escuela_procedencia,
-            'nombre_escuela'       => $nombre_escuela,
-            'promedio'             => $promedio,
-            'correo_institucional' => $correo_institucional,
             'grupo_asignado'       => $grupo_asignado,
             'horario_examen'       => $horario_examen,
         ]

@@ -1,21 +1,52 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['id_admin'])) {
+    header('Location: admin.html');
+    exit;
+}
+
+require_once 'conexion.php';
+
+// Calculamos disponibilidad de cada grupo + horario (igual que en editar_alumno.php)
+$grupos = ['1CM1', '1CM2', '1CM3', '1CM4', '1CM5'];
+$horarios = ['08:00 - 09:30', '09:45 - 11:15'];
+
+$opcionesDisponibles = [];
+foreach ($horarios as $horario) {
+    foreach ($grupos as $grupo) {
+        $stmtCount = $pdo->prepare(
+            "SELECT COUNT(*) FROM alumnos WHERE grupo_asignado = :grupo AND horario_examen = :horario"
+        );
+        $stmtCount->execute([':grupo' => $grupo, ':horario' => $horario]);
+        $cantidad = $stmtCount->fetchColumn();
+
+        if ($cantidad < 30) {
+            $opcionesDisponibles[] = [
+                'grupo' => $grupo,
+                'horario' => $horario,
+                'cantidad' => $cantidad
+            ];
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro - Nuevo Ingreso ESCOM</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Registrar Alumno - Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
 
-    <!-- Menú de Navegación -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
                 <img src="imgs/logoESCOMBlanco.png" alt="Logo IPN">
-                <span class="ms-2 fs-5 fw-bold d-none d-sm-block">Registro</span>
+                <span class="ms-2 fs-5 fw-bold d-none d-sm-block">Admin</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -23,8 +54,8 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="registro.html">Registro</a></li>
-                    <li class="nav-item"><a class="nav-link" href="admin.html">Admin</a></li>
+                    <li class="nav-item"><a class="nav-link" href="registro.html">Registro</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="admin.html">Admin</a></li>
                     <li class="nav-item"><a class="nav-link" href="cuenta.html">Cuenta</a></li>
                 </ul>
             </div>
@@ -32,13 +63,12 @@
     </nav>
 
     <main class="container my-5">
-        <h2 class="text-center mb-4" style="color: var(--ipn-guinda);">Registro de Datos Generales</h2>
-        
-        <form id="formularioRegistro" novalidate>
-            <!-- 1. Datos Personales -->
+        <h2 class="text-center mb-4" style="color: var(--ipn-guinda);">Registrar Alumno (Admin)</h2>
+
+        <form id="formularioRegistroAdmin" novalidate>
             <div class="card mb-4 shadow-sm">
-                <div class="card-header card-header-ipn">
-                    <h5 class="mb-0">1. Datos Personales</h5>
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">Datos del Alumno</h5>
                 </div>
                 <div class="card-body row g-3">
                     <div class="col-md-6">
@@ -124,16 +154,7 @@
                         <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="10 dígitos" required>
                         <div class="invalid-feedback">Deben ser 10 dígitos y no pueden empezar con 0 ni 1</div>
                     </div>
-                </div>
-            </div>
-
-            <!-- 2. Datos de Procedencia -->
-            <div class="card mb-4 shadow-sm">
-                <div class="card-header text-white" style="background-color: var(--escom-azul);">
-                    <h5 class="mb-0">2. Datos de Procedencia</h5>
-                </div>
-                <div class="card-body row g-3">
-                    <div class="col-md-6">  
+                    <div class="col-md-6">
                         <label class="form-label">Escuela de procedencia</label>
                         <select class="form-select" id="escuelaProcedencia" name="escuela_procedencia" required>
                             <option value="" selected disabled>Selecciona tu escuela...</option>
@@ -172,99 +193,60 @@
                         <input type="number" step="0.1" min="6.0" max="10.0" class="form-control" id="promedio" name="promedio" placeholder="Ej: 8.5" required>
                         <div class="invalid-feedback">El promedio debe ser un número entre 6.0 y 10.0</div>
                     </div>
-                </div>
-            </div>
-
-            <!-- 3. Datos de Cuenta -->
-            <div class="card mb-4 shadow-sm">
-                <div class="card-header bg-dark text-white">
-                    <h5 class="mb-0">3. Datos de Cuenta</h5>
-                </div>
-                <div class="card-body row g-3">
                     <div class="col-md-6">
                         <label class="form-label">Correo electrónico institucional</label>
-                        <input type="email" class="form-control" name="correo_institucional" id="correo"placeholder="jgarcial1234@alumno.ipn.mx" required>
+                        <input type="email" class="form-control" name="correo_institucional" id="correo" placeholder="jgarcial1234@alumno.ipn.mx" required>
                         <div class="invalid-feedback">Debe seguir el formato: inicial + apellido paterno + inicial apellido materno + 4 dígitos @alumno.ipn.mx</div>
-                        <div class="form-text">Ejemplo: Juan García López → jgarcial1234@alumno.ipn.mx</div>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Contraseña</label>
                         <input type="password" class="form-control" id="password" name="contrasena" required>
                         <div class="invalid-feedback">Mínimo 6 caracteres, 1 mayúscula, 1 dígito y 1 carácter especial</div>
-                        <div class="form-text">Mínimo 6 caracteres, 1 mayúscula, 1 dígito y 1 carácter especial.</div>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Grupo y Horario de Examen (asignación manual)</label>
+                        <select class="form-select" id="grupoHorario" name="grupo_horario" required>
+                            <option value="" selected disabled>Selecciona grupo y horario...</option>
+                            <?php foreach ($opcionesDisponibles as $op): ?>
+                                <?php $valor = $op['grupo'] . '|' . $op['horario']; ?>
+                                <?php $lugaresRestantes = 30 - $op['cantidad']; ?>
+                                <option value="<?php echo htmlspecialchars($valor); ?>">
+                                    <?php echo htmlspecialchars($op['grupo'] . ' - ' . $op['horario']); ?>
+                                    (<?php echo $lugaresRestantes; ?> lugares disponibles)
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <div class="invalid-feedback">Selecciona un grupo y horario con cupo disponible</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Botones -->
             <div class="d-flex justify-content-end gap-3">
-                <button type="reset" class="btn btn-secondary px-4">Limpiar</button>
-                <button type="submit" class="btn btn-success px-4" style="background-color: var(--ipn-guinda); border-color: var(--ipn-guinda);">Registrar</button>
+                <a href="panel_admin.php" class="btn btn-secondary px-4">Cancelar</a>
+                <button type="submit" class="btn btn-success px-4">Registrar Alumno</button>
             </div>
         </form>
-        <div id="pantallaExito" class="d-none alert alert-success mt-4" role="alert"></div>
 
+        <div id="resultadoRegistro" class="d-none alert alert-success mt-4" role="alert"></div>
     </main>
 
-   <footer>
-    <div class="container d-flex justify-content-between align-items-center py-3">
-        <img src="imgs/IPN-Logo.png" alt="Logo IPN" style="max-height: 65px;">
-        
-        <div class="contenedor-central-footer">
-            
-            <div class="bloque-texto">
-                <p class="mb-0">Instituto Politécnico Nacional - ESCOM &copy; 2026</p>
-                <small>Desarrollado para la materia Tecnologías para el Desarrollo de Aplicaciones Web</small>
+    <footer>
+        <div class="container d-flex justify-content-between align-items-center py-3">
+            <img src="imgs/IPN-Logo.png" alt="Logo IPN" style="max-height: 65px;">
+            <div class="contenedor-central-footer">
+                <div class="bloque-texto">
+                    <p class="mb-0">Instituto Politécnico Nacional - ESCOM &copy; 2026</p>
+                    <small>Desarrollado para la materia Tecnologías para el Desarrollo de Aplicaciones Web</small>
+                </div>
             </div>
-            <div class="bloque-redes">
-                <small class="fw-bold titulo-redes-small">Redes sociales</small>
-                <ul class="list-unstyled mb-0 lista-redes-footer">
-                    <li><a href="https://www.facebook.com/share/1BSBQNFr3F/" class="footer-link">Facebook:escomipnmx</a></li>
-                    <li><a href="https://www.instagram.com/escom_ipn_mx" class="footer-link">Instragem:escom_ipn_mx</a></li>
-                    <li><a href="https://www.tiktok.com/@escom_ipn_mx" class="footer-link">TikTok:escom_ipn_mx</a></li>
-                    <li><a href="https://x.com/escomunidad/" class="footer-link">Twitter:@escomunidad</a></li>
-                </ul>
+            <div class="d-flex align-items-center gap-2">
+                <img src="imgs/Logo_Equipo.png" alt="Logo del equipo" style="max-height: 65px;">
+                <img src="imgs/logoESCOMBlanco.png" alt="Logo ESCOM" style="max-height: 65px;">
             </div>
         </div>
-        <div class="d-flex align-items-center gap-2">
-            <img src="imgs/Logo_Equipo.png" alt="Logo del equipo" style="max-height: 65px;">
-            <img src="imgs/logoESCOMBlanco.png" alt="Logo ESCOM" style="max-height: 65px;">
-        </div>
-    </div>
     </footer>
-    <div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-labelledby="modalConfirmacionLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="modalConfirmacionLabel">Confirma tus datos</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Revisa que tu información sea correcta antes de finalizar el registro:</p>
-                    <ul class="list-group mb-3">
-                        <li class="list-group-item"><strong>Boleta:</strong> <span id="confBoleta"></span></li>
-                        <li class="list-group-item"><strong>Nombre:</strong> <span id="confNombre"></span></li>
-                        <li class="list-group-item"><strong>Fecha de nacimiento:</strong> <span id="confFechaNacimiento"></span></li>
-                        <li class="list-group-item"><strong>Género:</strong> <span id="confGenero"></span></li>
-                        <li class="list-group-item"><strong>CURP:</strong> <span id="confCurp"></span></li>
-                        <li class="list-group-item"><strong>Entidad de procedencia:</strong> <span id="confEntidad"></span></li>
-                        <li class="list-group-item"><strong>Teléfono:</strong> <span id="confTelefono"></span></li>
-                        <li class="list-group-item"><strong>Escuela de procedencia:</strong> <span id="confEscuela"></span></li>
-                        <li class="list-group-item"><strong>Promedio:</strong> <span id="confPromedio"></span></li>
-                        <li class="list-group-item"><strong>Correo:</strong> <span id="confCorreo"></span></li>
-                    </ul>
-                    <div class="alert alert-warning" role="alert">
-                        Si algún dato es incorrecto, cierra esta ventana y corrígelo.
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regresar a editar</button>
-                    <button type="button" class="btn btn-success" id="btnConfirmarRegistro">Sí, Registrar ahora</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="js/registro.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/registro_admin.js"></script>
 </body>
 </html>

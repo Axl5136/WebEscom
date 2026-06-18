@@ -11,8 +11,10 @@ require_once 'conexion.php';
 $boleta = $_POST['boleta'] ?? '';
 $nombre = $_POST['nombre_completo'] ?? '';
 $correo = $_POST['correo_institucional'] ?? '';
-$grupo = $_POST['grupo_asignado'] ?? '';
-$horario = $_POST['horario_examen'] ?? '';
+$grupo_horario = $_POST['grupo_horario'] ?? '';
+$partes = explode('|', $grupo_horario);
+$grupo = $partes[0] ?? '';
+$horario = $partes[1] ?? '';
 $nueva_password = $_POST['nueva_password'] ?? '';
 
 if (empty($boleta)) {

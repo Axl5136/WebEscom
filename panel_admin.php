@@ -50,8 +50,11 @@ $alumnos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <h2>Panel de Administración</h2>
             <p class="text-muted">Bienvenido, <?php echo htmlspecialchars($_SESSION['usuario_admin']); ?></p>
         </div>
-        <a href="logout_admin.php" class="btn btn-outline-danger">Cerrar Sesión</a>
-    </div>
+        <div class="d-flex gap-2">
+            <a href="registro_alumno_admin.php" class="btn btn-success">+ Registrar Alumno</a>
+            <a href="logout_admin.php" class="btn btn-outline-danger">Cerrar Sesión</a>
+        </div>
+        </div>
 
     <div class="table-responsive">
         <table class="table table-striped table-bordered align-middle">

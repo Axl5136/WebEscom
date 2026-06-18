@@ -12,16 +12,16 @@ class PDF extends FPDF
     // Encabezado
     function Header()
     {
-        $this->Image(utf8_decode('imgs/IPN-Logo.png'), 10, 8, 25);
+        $this->Image ('imgs/IPN-Logo.png', 10, 8, 25);
 
-        $this->Image(utf8_decode('imgs/escudo_ESCOM.png'), 175, 8, 25);
+        $this->Image ('imgs/escudo_ESCOM.png', 175, 8, 25);
 
         $this->SetFont('Arial', 'B', 14);
         $this->SetTextColor(0, 0, 0);
-        $this->Cell(0, 8, 'INSTITUTO POLITECNICO NACIONAL', 0, 1, 'C');
+        $this->Cell(0, 8, utf8_decode('INSTITUTO POLITÉCNICO NACIONAL'), 0, 1, 'C');
 
         $this->SetFont('Arial', '', 11);
-        $this->Cell(0, 6, 'ESCUELA SUPERIOR DE COMPUTO', 0, 1, 'C');
+        $this->Cell(0, 6, utf8_decode('ESCUELA SUPERIOR DE CÓMPUTO'), 0, 1, 'C');
 
         $this->Ln(8);
 
@@ -36,11 +36,11 @@ class PDF extends FPDF
     function Footer()
     {
         $this->SetY(-25);
-        $this->Image(utf8_decode('imgs/Logo_Equipo.png'), 90, $this->GetY(), 30);
+        $this->Image('imgs/Logo_Equipo.png', 90, $this->GetY(), 30);
         $this->Ln(15);
         $this->SetFont('Arial', 'I', 8);
         $this->SetTextColor(128, 128, 128);
-        $this->Cell(0, 10, 'Pagina ' . $this->PageNo(), 0, 0, 'C');
+        $this->Cell(0, 10, utf8_decode('Página ') . $this->PageNo(), 0, 0, 'C');
     }
 }
 
@@ -50,19 +50,65 @@ $pdf->AddPage();
 // Título del cuerpo
 $pdf->SetFont('Arial', 'B', 16);
 $pdf->SetTextColor(0, 0, 0);
-$pdf->Cell(0, 12, utf8_decode('ACUSE DE REGISTRO DE ASPIRANTE'), 0, 1, 'C');
+$pdf->Cell(0, 12, 'ACUSE DE REGISTRO DE ASPIRANTE', 0, 1, 'C');
 $pdf->Ln(5);
 
-// Datos del alumno
 $pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(50, 10, utf8_decode('Boleta:'), 0, 0);
 $pdf->SetFont('Arial', '', 12);
-$pdf->Cell(0, 10, $_SESSION['boleta'], 0, 1);
+$pdf->Cell(0, 10, utf8_decode($_SESSION['boleta']), 0, 1);
 
 $pdf->SetFont('Arial', 'B', 12);
-$pdf->Cell(50, 10, utf8_decode('Nombre completo:'), 0, 0);
+$pdf->Cell(50, 10, 'Nombre completo:', 0, 0);
 $pdf->SetFont('Arial', '', 12);
 $pdf->Cell(0, 10, utf8_decode($_SESSION['nombre_completo']), 0, 1);
+
+$pdf->SetFont('Arial', 'B', 11);
+$pdf->Cell(50, 8, utf8_decode('Fecha de nacimiento:'), 0, 0);
+$pdf->SetFont('Arial', '', 11);
+$pdf->Cell(0, 8, $_SESSION['fecha_nacimiento'], 0, 1);
+
+$pdf->SetFont('Arial', 'B', 11);
+$pdf->Cell(50, 8, utf8_decode('Género:'), 0, 0);
+$pdf->SetFont('Arial', '', 11);
+$pdf->Cell(0, 8, utf8_decode($_SESSION['genero']), 0, 1);
+
+$pdf->SetFont('Arial', 'B', 11);
+$pdf->Cell(50, 8, 'CURP:', 0, 0);
+$pdf->SetFont('Arial', '', 11);
+$pdf->Cell(0, 8, $_SESSION['curp'], 0, 1);
+
+$pdf->SetFont('Arial', 'B', 11);
+$pdf->Cell(50, 8, utf8_decode('Estado de procedencia:'), 0, 0);
+$pdf->SetFont('Arial', '', 11);
+$pdf->Cell(0, 8, utf8_decode($_SESSION['estado_procedencia']), 0, 1);
+
+$pdf->SetFont('Arial', 'B', 11);
+$pdf->Cell(50, 8, utf8_decode('Teléfono:'), 0, 0);
+$pdf->SetFont('Arial', '', 11);
+$pdf->Cell(0, 8, $_SESSION['telefono'], 0, 1);
+
+$pdf->SetFont('Arial', 'B', 11);
+$pdf->Cell(50, 8, utf8_decode('Escuela de procedencia:'), 0, 0);
+$pdf->SetFont('Arial', '', 11);
+$pdf->Cell(0, 8, utf8_decode($_SESSION['escuela_procedencia']), 0, 1);
+
+if (!empty($_SESSION['nombre_escuela'])) {
+    $pdf->SetFont('Arial', 'B', 11);
+    $pdf->Cell(50, 8, utf8_decode('Nombre de la escuela:'), 0, 0);
+    $pdf->SetFont('Arial', '', 11);
+    $pdf->Cell(0, 8, utf8_decode($_SESSION['nombre_escuela']), 0, 1);
+}
+
+$pdf->SetFont('Arial', 'B', 11);
+$pdf->Cell(50, 8, 'Promedio:', 0, 0);
+$pdf->SetFont('Arial', '', 11);
+$pdf->Cell(0, 8, $_SESSION['promedio'], 0, 1);
+
+$pdf->SetFont('Arial', 'B', 11);
+$pdf->Cell(50, 8, 'Correo institucional:', 0, 0);
+$pdf->SetFont('Arial', '', 11);
+$pdf->Cell(0, 8, $_SESSION['correo_institucional'], 0, 1);
 
 $pdf->Ln(8);
 
@@ -102,7 +148,7 @@ $pdf->Ln(15);
 $pdf->SetFont('Arial', '', 10);
 $pdf->Cell(0, 6, utf8_decode('Favor de presentar este acuse el día del examen para su validación.'), 0, 1, 'L');
 $pdf->Cell(0, 6, utf8_decode('Favor de llegar con tiempo al laboratorio.'), 0, 1, 'L');
-$pdf->Cell(0, 6, utf8_decode('Codigo de validacion: ') . strtoupper(substr(md5($_SESSION['boleta'] . date('Ymd')), 0, 10)), 0, 1, 'L');
+$pdf->Cell(0, 6, utf8_decode('Código de validación: ') . strtoupper(substr(md5($_SESSION['boleta'] . date('Ymd')), 0, 10)), 0, 1, 'L');
 $pdf->Ln(15);
 
 $pdf->Cell(90, 6, '_______________________', 0, 0, 'C');
@@ -111,6 +157,6 @@ $pdf->Cell(90, 6, '_______________________', 0, 1, 'C');
 
 $pdf->Cell(90, 6, 'Firma del Aspirante', 0, 0, 'C');
 $pdf->Cell(10, 6, '', 0, 0);
-$pdf->Cell(90, 6, 'Sello / Autorizacion', 0, 1, 'C');
+$pdf->Cell(90, 6, utf8_decode('Sello / Autorización'), 0, 1, 'C');
 
 $pdf->Output('I', $_SESSION['boleta'] . '.pdf');

@@ -26,7 +26,34 @@ if (!$alumno) {
     header('Location: panel_admin.php');
     exit;
 }
+
+$grupos = ['1CM1', '1CM2', '1CM3', '1CM4', '1CM5'];
+$horarios = ['08:00 - 09:30', '09:45 - 11:15'];
+
+$opcionesDisponibles = [];
+foreach ($horarios as $horario) {
+    foreach ($grupos as $grupo) {
+        $stmtCount = $pdo->prepare(
+            "SELECT COUNT(*) FROM alumnos WHERE grupo_asignado = :grupo AND horario_examen = :horario AND boleta != :boleta_actual"
+        );
+        $stmtCount->execute([
+            ':grupo' => $grupo,
+            ':horario' => $horario,
+            ':boleta_actual' => $boleta
+        ]);
+        $cantidad = $stmtCount->fetchColumn();
+
+        if ($cantidad < 30) {
+            $opcionesDisponibles[] = [
+                'grupo' => $grupo,
+                'horario' => $horario,
+                'cantidad' => $cantidad
+            ];
+        }
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -82,13 +109,31 @@ if (!$alumno) {
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Grupo Asignado</label>
-            <input type="text" class="form-control" name="grupo_asignado" value="<?php echo htmlspecialchars($alumno['grupo_asignado']); ?>" required>
-        </div>
+            <label class="form-label">Grupo y Horario de Examen</label>
+            <select class="form-select" name="grupo_horario" required>
+                <?php
+                $actualYaEsta = false;
+                foreach ($opcionesDisponibles as $op) {
+                    if ($op['grupo'] === $alumno['grupo_asignado'] && $op['horario'] === $alumno['horario_examen']) {
+                        $actualYaEsta = true;
+                    }
+                }
+                if (!$actualYaEsta) {
+                    echo '<option value="' . htmlspecialchars($alumno['grupo_asignado']) . '|' . htmlspecialchars($alumno['horario_examen']) . '" selected>';
+                    echo htmlspecialchars($alumno['grupo_asignado']) . ' - ' . htmlspecialchars($alumno['horario_examen']) . ' (actual)';
+                    echo '</option>';
+                }
 
-        <div class="mb-3">
-            <label class="form-label">Horario de Examen</label>
-            <input type="text" class="form-control" name="horario_examen" value="<?php echo htmlspecialchars($alumno['horario_examen']); ?>" required>
+                foreach ($opcionesDisponibles as $op) {
+                    $valor = $op['grupo'] . '|' . $op['horario'];
+                    $esElActual = ($op['grupo'] === $alumno['grupo_asignado'] && $op['horario'] === $alumno['horario_examen']);
+                    $lugaresRestantes = 30 - $op['cantidad'];
+                    echo '<option value="' . htmlspecialchars($valor) . '"' . ($esElActual ? ' selected' : '') . '>';
+                    echo htmlspecialchars($op['grupo']) . ' - ' . htmlspecialchars($op['horario']) . ' (' . $lugaresRestantes . ' lugares disponibles)';
+                    echo '</option>';
+                }
+                ?>
+            </select>
         </div>
 
         <div class="mb-3">

@@ -23,6 +23,15 @@ try {
             $_SESSION['nombre_completo'] = $alumno['nombre_completo'];
             $_SESSION['grupo_asignado'] = $alumno['grupo_asignado'];
             $_SESSION['horario_examen'] = $alumno['horario_examen'];
+            $_SESSION['fecha_nacimiento'] = $alumno['fecha_nacimiento'];
+            $_SESSION['genero'] = $alumno['genero'];
+            $_SESSION['curp'] = $alumno['curp'];
+            $_SESSION['estado_procedencia'] = $alumno['estado_procedencia'];
+            $_SESSION['telefono'] = $alumno['telefono'];
+            $_SESSION['escuela_procedencia'] = $alumno['escuela_procedencia'];
+            $_SESSION['nombre_escuela'] = $alumno['nombre_escuela'];
+            $_SESSION['promedio'] = $alumno['promedio'];
+            $_SESSION['correo_institucional'] = $alumno['correo_institucional'];
 
             echo json_encode(['success' => true]);
         } else {
