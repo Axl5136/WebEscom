@@ -154,7 +154,7 @@ formulario.addEventListener("submit", function (event) {
         datos.append("grupo_asignado", grupoAsignado);
         datos.append("horario_examen", horarioExamen);
 
-        fetch("registrar_alumno_admin_backend.php", {
+        fetch("registro_admin_backend.php", {
             method: "POST",
             body: datos
         })
