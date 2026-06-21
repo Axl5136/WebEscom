@@ -8,16 +8,18 @@ if (!isset($_SESSION['id_admin'])) {
 
 require_once 'conexion.php';
 
-$boleta = $_POST['boleta'] ?? '';
-$nombre = $_POST['nombre_completo'] ?? '';
-$correo = $_POST['correo_institucional'] ?? '';
-$grupo_horario = $_POST['grupo_horario'] ?? '';
-$partes = explode('|', $grupo_horario);
-$grupo = $partes[0] ?? '';
+$boleta_original = $_POST['boleta_original'] ?? '';
+$boleta_nueva    = $_POST['boleta_nueva']    ?? '';
+$nombre          = $_POST['nombre_completo']      ?? '';
+$correo          = $_POST['correo_institucional']  ?? '';
+$telefono        = $_POST['telefono']              ?? '';
+$grupo_horario   = $_POST['grupo_horario']         ?? '';
+$partes  = explode('|', $grupo_horario);
+$grupo   = $partes[0] ?? '';
 $horario = $partes[1] ?? '';
 $nueva_password = $_POST['nueva_password'] ?? '';
 
-if (empty($boleta)) {
+if (empty($boleta_original)) {
     header('Location: panel_admin.php');
     exit;
 }
@@ -27,38 +29,46 @@ try {
         $password_encriptada = password_hash($nueva_password, PASSWORD_DEFAULT);
         
         $sql = "UPDATE alumnos 
-                SET nombre_completo = :nombre, 
-                    correo_institucional = :correo, 
+                SET boleta = :boleta_nueva,
+                    nombre_completo = :nombre, 
+                    correo_institucional = :correo,
+                    telefono = :telefono,
                     grupo_asignado = :grupo, 
                     horario_examen = :horario, 
                     contrasena = :contrasena 
-                WHERE boleta = :boleta";
+                WHERE boleta = :boleta_original";
                 
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
-            ':nombre' => $nombre,
-            ':correo' => $correo,
-            ':grupo' => $grupo,
-            ':horario' => $horario,
-            ':contrasena' => $password_encriptada,
-            ':boleta' => $boleta
+            ':boleta_nueva'  => $boleta_nueva,
+            ':nombre'        => $nombre,
+            ':correo'        => $correo,
+            ':telefono'      => $telefono,
+            ':grupo'         => $grupo,
+            ':horario'       => $horario,
+            ':contrasena'    => $password_encriptada,
+            ':boleta_original' => $boleta_original
         ]);
         
     } else {
         $sql = "UPDATE alumnos 
-                SET nombre_completo = :nombre, 
-                    correo_institucional = :correo, 
+                SET boleta = :boleta_nueva,
+                    nombre_completo = :nombre, 
+                    correo_institucional = :correo,
+                    telefono = :telefono,
                     grupo_asignado = :grupo, 
                     horario_examen = :horario 
-                WHERE boleta = :boleta";
+                WHERE boleta = :boleta_original";
                 
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
-            ':nombre' => $nombre,
-            ':correo' => $correo,
-            ':grupo' => $grupo,
-            ':horario' => $horario,
-            ':boleta' => $boleta
+            ':boleta_nueva'    => $boleta_nueva,
+            ':nombre'          => $nombre,
+            ':correo'          => $correo,
+            ':telefono'        => $telefono,
+            ':grupo'           => $grupo,
+            ':horario'         => $horario,
+            ':boleta_original' => $boleta_original
         ]);
     }
 

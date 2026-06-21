@@ -52,7 +52,7 @@ $alumnos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
         <div class="d-flex gap-2">
             <a href="registro_alumno_admin.php" class="btn btn-success">+ Registrar Alumno</a>
-            <a href="logout_admin.php" class="btn btn-outline-danger">Cerrar Sesión</a>
+            <a href="logout.php" class="btn btn-outline-danger">Cerrar Sesión</a>
         </div>
         </div>
 

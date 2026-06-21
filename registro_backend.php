@@ -48,9 +48,6 @@ if ($grupo_asignado === null) {
     exit;
 }
 
-$grupo_asignado = $grupos[array_rand($grupos)];
-$horario_examen = $horarios[array_rand($horarios)];
-
 try {
 
     $sql = "INSERT INTO alumnos (

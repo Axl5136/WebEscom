@@ -155,7 +155,7 @@ $pdf->Cell(90, 6, '_______________________', 0, 0, 'C');
 $pdf->Cell(10, 6, '', 0, 0);
 $pdf->Cell(90, 6, '_______________________', 0, 1, 'C');
 
-$pdf->Cell(90, 6, 'Firma del Aspirante', 0, 0, 'C');
+$pdf->Cell(90, 6, utf8_decode('Firma del Aspirante'), 0, 0, 'C');
 $pdf->Cell(10, 6, '', 0, 0);
 $pdf->Cell(90, 6, utf8_decode('Sello / Autorización'), 0, 1, 'C');
 

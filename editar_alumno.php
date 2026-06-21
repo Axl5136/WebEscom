@@ -91,11 +91,11 @@ foreach ($horarios as $horario) {
 
     <form id="formEditarAlumno" method="POST" action="procesar_edicion.php">
 
-        <input type="hidden" name="boleta" value="<?php echo htmlspecialchars($alumno['boleta']); ?>">
+        <input type="hidden" name="boleta_original" value="<?php echo htmlspecialchars($alumno['boleta']); ?>">
 
         <div class="mb-3">
             <label class="form-label">Boleta</label>
-            <input type="text" class="form-control" value="<?php echo htmlspecialchars($alumno['boleta']); ?>" readonly>
+            <input type="text" class="form-control" name="boleta_nueva" value="<?php echo htmlspecialchars($alumno['boleta']); ?>" required>
         </div>
 
         <div class="mb-3">
@@ -106,6 +106,12 @@ foreach ($horarios as $horario) {
         <div class="mb-3">
             <label class="form-label">Correo Institucional</label>
             <input type="email" class="form-control" name="correo_institucional" value="<?php echo htmlspecialchars($alumno['correo_institucional']); ?>" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Teléfono</label>
+            <input type="tel" class="form-control" name="telefono" value="<?php echo htmlspecialchars($alumno['telefono']); ?>" maxlength="15" pattern="[0-9]{10,15}" placeholder="Ej: 5512345678" required>
+            <small class="text-muted">Solo números, entre 10 y 15 dígitos.</small>
         </div>
 
         <div class="mb-3">
