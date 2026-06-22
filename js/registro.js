@@ -214,9 +214,9 @@ document.getElementById("btnConfirmarRegistro").addEventListener("click", functi
                 <p class="mb-1"><strong>Grupo asignado:</strong> ${d.grupo_asignado}</p>
                 <p class="mb-0"><strong>Horario de examen:</strong> ${d.horario_examen}</p>
                 <div class="mt-3">
-                    <a href="generar_pdf.php" target="_blank" class="btn btn-primary">Imprimir Acuse (PDF)</a>
+                    <a href="generar_pdf.php" target="_blank" class="btn btn-success">Acuse</a>
                 </div>
-                <p class="mt-3 text-muted"><small>El formulario se reiniciará en 30 segundos...</small></p>
+                <p class="mt-0"><strong>El formulario se reiniciará en 30 segundos...</strong></p>
             `;
 
             pantallaExito.classList.remove("d-none");
